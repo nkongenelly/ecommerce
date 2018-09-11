@@ -49,7 +49,7 @@ class CategoryController extends Controller
         Category::create(request(['category_parent','category_name']));
         session()->flash('success_message', 'You have created a category');
 
-        return view('categories.indexC');
+        return redirect('/categories');
     }
 
     /**
@@ -71,7 +71,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = Category::find($id);
+        return view('categories.editC',compact('category'));
     }
 
     /**
@@ -83,7 +84,15 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate(request(),[
+            'category_parent' => 'required',
+            'category_name' => 'required'
+        ]);
+
+        Category::where('id',$id)
+                ->update(request(['category_parent','category_name']));
+
+        return redirect('/categories');
     }
 
     /**
@@ -94,6 +103,9 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Category::where('id', $id)
+                ->delete();
+
+        return redirect('/categories');
     }
 }
