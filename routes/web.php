@@ -23,7 +23,7 @@ Route::post('/categories', 'CategoryController@store');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index');
 
 Route::group(['middleware'=>'App\Http\Middleware\Admin'],function()
 {
@@ -39,3 +39,5 @@ Route::group(['middleware'=>'App\Http\Middleware\Seller'],function()
 {
     Route::match(['get','post'],'/sellerOnlyPage','HomeController@seller');
 });
+
+

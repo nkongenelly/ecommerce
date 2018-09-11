@@ -3,6 +3,10 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Auth;
+use App\User;
+use App\Category;
+use Illuminate\Http\Response;
 
 class Buyer
 {
@@ -19,6 +23,6 @@ class Buyer
             return redirect('home')->with('error','You do not have admin access');
             // return new Response(view('unauthorised access'->with('user_type','ADMIN'));
         }
-        return $next($request); 
+        return new Response(view('unauthorized')->with('role','BUYER'));
     }
 }

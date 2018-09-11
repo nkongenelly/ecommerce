@@ -26,20 +26,19 @@ class HomeController extends Controller
     {
         return view('home');
     }
-    public function admin()
+    public function admin(Request $req)
     { 
-        $categories = Category::all();
-        return view('categories.indexC',compact('categories')); 
+        return view('middleware')->withMessage("Admin");
+        // $categories = Category::all();
+        // return view('categories.indexC',compact('categories')); 
     }
     public function buyer()
     { 
-        $categories = Category::all();
-        return view('categories.indexC',compact('categories')); 
+        return view('middleware')->withMessage("Buyer"); 
     }
     public function seller()
     { 
-        $categories = Category::all();
-        return view('categories.indexC',compact('categories')); 
+        return view('middleware')->withMessage("Seller");
     }
 
 }

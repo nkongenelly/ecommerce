@@ -61,8 +61,8 @@
                             </div>
                         </div>
                         
-                        <div class="form-group">
-                            <label for="usertype_id" class="col-md-4 control-label">User Type:</label>
+                        <div class="form-group row">
+                            <label for="usertype_id" class="col-md-4 col-form-label text-md-right">User Type:</label>
                                 <div class="col-md-6">
                                     <select name="usertype_id" id="type" class="form-control">
                                         <option value="1">Buyer</option>
