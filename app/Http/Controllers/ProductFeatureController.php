@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Feature;
 
-class FeatureController extends Controller
+class productFeatureController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +13,7 @@ class FeatureController extends Controller
      */
     public function index()
     {
-        $features = Feature::all();
-        return view('features.indexF',compact('features'));
+        //
     }
 
     /**
@@ -25,9 +23,7 @@ class FeatureController extends Controller
      */
     public function create()
     {
-        $user = auth()->user();
-        return view('features.createF',compact('user'));
-        
+        //
     }
 
     /**
@@ -39,12 +35,12 @@ class FeatureController extends Controller
     public function store(Request $request)
     {
         $this->validate(request(),[
-            'user_id' => 'required',
-            'feature_name' => 'required',
+            'product_id' => 'required',
+            'feature_id' => 'required',
         ]);
 
-        $features = Feature::create(request(['user_id','feature_name']));
-        return redirect('/features');
+        $features = Feature::create(request(['product_id','feature_id']));
+        return back();
     }
 
     /**
@@ -66,11 +62,7 @@ class FeatureController extends Controller
      */
     public function edit($id)
     {
-        $feature = Feature::find($id);
-        $user = auth()->user();
-
-        return view('features.editF',compact('feature','user'));
-            
+        //
     }
 
     /**
@@ -83,13 +75,14 @@ class FeatureController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate(request(),[
-            'user_id' => 'required',
-            'feature_name' => 'required',
+            'product_id' => 'required',
+            'feature_id' => 'required',
         ]);
 
-        Feature::where('id',$id)
-            ->update(request(['user_id','feature_name']));
-        return redirect('/features');
+        Product::where('id',$id)
+                ->update(request(['product_id','feature_id']));
+
+                return back();
     }
 
     /**
@@ -100,8 +93,6 @@ class FeatureController extends Controller
      */
     public function destroy($id)
     {
-        Feature::where('id',$id)
-            ->delete();
-            return redirect('/features');
+        //
     }
 }

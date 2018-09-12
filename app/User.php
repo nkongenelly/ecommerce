@@ -6,6 +6,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\UserType;
+use App\Category;
+use App\Product;
 
 class User extends Authenticatable
 {
@@ -30,5 +32,13 @@ class User extends Authenticatable
     ];
     public function usertype(){
         return $this->belongsTo(UserType::class);
+    }
+
+    public function ucategories(){
+        return $this->hasMany(Category::class);
+    }
+
+    public function products(){
+        return $this->hasMany(Product::class);
     }
 }

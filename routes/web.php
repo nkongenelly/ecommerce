@@ -41,6 +41,38 @@ Route::patch('/users/update/{id}', 'UserController@update');
 
 Route::get('/users/delete/{id}', 'UserController@destroy');
 
+//Products
+Route::get('/products', 'ProductController@index');
+
+Route::get('/products/create', 'ProductController@create');
+
+Route::post('/products', 'ProductController@store');
+
+Route::get('/products/edit/{id}', 'ProductController@edit');
+
+Route::get('/products/features/{id}', 'ProductController@features');
+
+Route::patch('/products/update/{id}', 'ProductController@update');
+
+Route::get('/products/delete/{id}', 'ProductController@destroy');
+
+//Features
+Route::get('/features', 'FeatureController@index');
+
+Route::get('/features/create', 'FeatureController@create');
+
+Route::post('/features', 'FeatureController@store');
+
+Route::get('/features/edit/{id}', 'FeatureController@edit');
+
+Route::patch('/features/update/{id}', 'FeatureController@update');
+
+Route::get('/features/delete/{id}', 'FeatureController@destroy');
+
+//ProductFeatures
+Route::post('/productfeatures', 'ProductFeatureController@store');
+
+Route::patch('/productfeatures/update/{id}', 'ProductFeatureController@update');
 
 //Auth and middlewre
 

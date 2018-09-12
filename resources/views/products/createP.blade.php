@@ -1,0 +1,34 @@
+@extends('layoutsSeller')
+
+@section('content')
+    <form action="/products" method="POST" class="form-horizontal">
+        {{ csrf_field() }}
+        <div class="form-control">
+            <select name="category_id">
+                <option value="0">--No Category--</option>
+               
+                    @foreach($categories as $category)
+                        <option value="{{$category->id}}">{{$category->category_name}}</option>
+                    @endforeach
+               
+            </select>
+            <input type="hidden" name="user_id" value="{{ $user['id'] }}">
+            <div class="form-group">
+                <label>Product name</label>
+                <input type="text" class="form-control" placeholder="Type the product name" name="product_name">
+            </div>
+            <div class="form-group">
+                <label>Product Price</label>
+                <input type="text" class="form-control" placeholder="Type the product price" name="product_price">
+            </div>
+            <div class="form-group">
+                <label>Product Description</label>
+                <textarea class="form-control" placeholder="Type the product description" name="product_description"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Product</button>
+           
+        </div>
+    
+    </form>
+
+@endsection
