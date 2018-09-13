@@ -8,31 +8,29 @@
             <th>#</th>
             <th>Product Name</th>
             <th>Feature Name</th>
-            <th colspan="2">Action</th>
         </tr>
-        @if(count($product->features))
-            @foreach($product->features as $feature)
+
                 <tr>
                 
                     <td>{{ $product['id'] }}</td>
                     <td>{{ $product['product_name'] }}</td>
-                    <td>
+                    <td colspan="3">
+                    @foreach($features as $feature)
                         <ol>
-                            @foreach($features as $feature)
-                               <ul>{{ $feature['feature_name'] }}</ul>
-                            @endforeach
+                            <ul>{{ $feature['feature_name'] }}
+                    
+                                <a href="/productfeatures/{{ $product['id'] }}" class="btn btn-warning">Edit</a>
+                                <a href="/productfeatures/delete/{{ $product['id'] }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
+                            </ul>
+                         
                         </ol>
+                    @endforeach
                     </td>
-                    <td>
-                        <a href="/productfeatures/{{ $product['id'] }}" class="btn btn-warning">Edit</a>
-                    </td>
-                    <td>
-                        <a href="/productfeatures/delete/{{ $product['id'] }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
-                    </td>
+                   
                 
                 </tr>
-            @endforeach
-        @endif
+    
+ 
 
     </table>
 

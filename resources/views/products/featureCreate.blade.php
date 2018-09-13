@@ -14,8 +14,9 @@
                     @endforeach
                
             </select>
-            <input type="hidden" name="user_id" value="{{ $user->id }}">
         </div>
+            <input type="hidden" name="user_id" value="{{ $user->id }}">
+ 
         <div class="form-control">
             <a href="/products/features/{{ $product->id }}" class="btn btn-primary">Back</a>
             <button type="submit" class="btn btn-primary">Add Product Feature</button>

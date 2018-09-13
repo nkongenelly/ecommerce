@@ -63,11 +63,11 @@ class ProductFeatureController extends Controller
         // // dd($product);
         // $user = auth()->user();
         // $features = $product->features();
-        $user = auth()->user($id);
+        // $user = auth()->user($id);
         // $products = Product::where('user_id',$user);
-        $products = Product::where('user_id',$id)->get();
+        // $products = Product::where('user_id',$id)->get();
         // dd($products);
-        return view('products.indexP',compact('user','products'));
+        return redirect('/products/{{ Auth::user()->id  }}');
     }
 
     /**

@@ -1,3 +1,3 @@
 setTimeout(function(){
-    document.getElementById('formSuccess').style.display = 'none';
+    document.getElementById("formSuccess").style.display="none";
 },5000);

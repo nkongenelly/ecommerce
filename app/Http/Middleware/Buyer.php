@@ -22,7 +22,8 @@ class Buyer
     {
         if($request->user() && $request->user()->usertype_id == '1'){
             // return redirect('home')->with('error','You do not have admin access');
-            $products = Product::all();
+            $products = Product::where('product_status','1')
+                ->get();
             return new Response(view('products.indexpBuyer',compact('products'))->with('role','BUYER'));
             // return new Response(view('unauthorised access'->with('user_type','ADMIN'));
         }

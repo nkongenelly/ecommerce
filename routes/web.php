@@ -113,7 +113,9 @@ Route::get('/productfeatures/delete/{id}', 'ProductFeatureController@destroy');
 //Orders
 Route::get('/orders/{id}', 'OrderController@index');
 
-Route::get('/orders/create/{id}', 'OrderController@create');
+Route::get('/orders/cart/{id}/{product}', 'OrderController@cart');
+
+Route::get('/orders/create/{id}', 'OrderController@create');//for status placed
 
 Route::post('/orders', 'OrderController@store');
 
@@ -122,6 +124,8 @@ Route::get('/orders/edit/{id}', 'OrderController@edit');
 Route::patch('/orders/update/{id}', 'OrderController@update');
 
 Route::get('/orders/delete/{id}', 'OrderController@destroy');
+
+Route::post('/orderitems/{results}', 'OrderController@orderitems');
 
 
 

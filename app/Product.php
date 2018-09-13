@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use App\Category;
 use App\Product;
 use App\Feature;
@@ -24,13 +25,13 @@ class Product extends Model
     public function user(){
         return $this->belongsTo(Product::class);
     }
-    public function order(){
+    public function orders(){
         return $this-hasMany(Order::class);
     }
     public function orderitems(){
         return $this-hasMany(OrderItems::class);
     }
     public function featureproduct(){
-        return $this->belongsTo(FeatureProduct::class);
+        return $this->belongsTo(DB::table('feature_product'));
     }
 }

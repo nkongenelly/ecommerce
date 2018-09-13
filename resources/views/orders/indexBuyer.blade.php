@@ -1,48 +1,46 @@
 @extends('layoutsBuyer')
 
 @section('content')
-    <a href="/productss/create" class="btn btn-warning">Add Product</a>
+<a href="/productsbuyer" class="btn btn-warning">Back</a>
     <table class="table table-condensed table-striped table-hover table-bordered">
         <tr>
             <th>#</th>
             <th>Product Name</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Created On</th>
-            <th colspan="2">Action</th>
+            <th>Product description</th>
+            <th>Product Price</th>
+            <th>Action</th>
+            <th>Placed Order</th>
         </tr>
-        
-        @if(count($products))
-            @foreach($products as $product)
-            <tr>
-                <td>{{ $product->id }}</td>
-                <td>{{ $product->category['category_name'] }}</td>
-                <td>{{ $product['product_name'] }}</td>
-               
-                    @if($product['product_status="1"'])
-                        <td>In Stock</td>
-                    @else($product['product_status="2"'])
-                        <td>Out of Stock</td>
-                    @endif
-               
-                <td>{{ $product['product_price'] }}</td>
-                <td>{{ $product['product_description'] }}</td>
-                <td>{{ $product['created_at->diffForHumans()'] }}</td>
-                <td>
-                    <a href="/products/features/{{ $product['id'] }}" class="btn btn-warning">Features</a>
-                </td>
-                <td>
-                    <a href="/products/edit/{{ $product['id'] }}" class="btn btn-warning">Edit</a>
-                </td>
-                <td>
-                    <a href="/products/delete/{{ $product['id'] }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
-                </td>
-            </tr>
+        @if(array($orders))
+            @foreach($orders as $order)
+                @foreach($productss as $product)
+                        <tr>
+                            <td>{{ $product['id'] }}</td>
+                            <td>{{ $product['product_name'] }}</td>
+                                
+                            <td>{{ $product['product_description'] }}</td>
+                            <td>{{ $product['product_price'] }}</td>
+                            <td>
+                                <a href="/orders/create/{{ $product['id'] }}" class="btn btn-outline-success my-2 my-sm-0">Place Orders</a>
+                            </td>
+                            <td>
+                                @foreach($orders as $order)
+                                    @if($order = 1)
+                                        <strong>Yes</strong>
+                                    @else
+                                        <strong>No</strong>
+                                    @endif
+                                @endforeach
+                            </td>  
+                           
+                        </tr>
+                @endforeach
             @endforeach
-        @endif       
-       
+        @endif
+           
     
     </table>
+    
 
 @endsection
 

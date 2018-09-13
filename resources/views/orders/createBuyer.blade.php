@@ -5,8 +5,8 @@
         {{ csrf_field() }}
         <div class="form-control">
             <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-            <input type="hidden" name="order_status_id" value="{{ $orderstatus->id }}">
-            <input type="hidden" name="product_id" value="{{ $product->id }}">
+            <input type="hidden" name="order_status_id" value="{{ $orderstatus->id=2 }}">
+            <input type="hidden" name="product_id" value="{{ $id }}">
             <div class="form-group">
                 <label>Product</label>
                 <input type="text" class="form-control" value="{{ $product->product_name }}" name="quantity" disabled>
@@ -20,7 +20,7 @@
                 <input type="number" class="form-control" name="quantity">
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary">Add to Cart</button>  
+                <button type="submit" class="btn btn-primary">Place Order</button>  
             </div>         
         </div>
     

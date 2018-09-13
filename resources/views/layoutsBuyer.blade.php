@@ -48,7 +48,7 @@
         </li>
                        
         </ul>
-        <form action="/orders" method="GET" class="form-inline my-2 my-lg-0">
+        <form action="/orders/{{ Auth::user()->id }}" method="GET" class="form-inline my-2 my-lg-0">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">My Cart</button>
         </form>
     </div>
