@@ -29,6 +29,15 @@ class ProductController extends Controller
         return view('products.indexP',compact('user','products'));
     }
 
+    public function indexBuyer()
+    {
+        //get products whose status is 1 (in stock)
+        $products = Product::where('product_status','1')
+                ->get();
+                // dd($products);
+            return view('products.indexpBuyer',compact('products'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
