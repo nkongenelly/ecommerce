@@ -7,7 +7,7 @@
         <a href="/features/create" class="btn btn-warning">Add Feature</a>
         <div class="form-control">
             <select name="feature_id">
-                <option>--ChooseFeature--</option>
+                <option value="0">--ChooseFeature--</option>
                
                     @foreach($features as $feature)
                         <option value="{{$feature->id}}">{{$feature->feature_name}}</option>

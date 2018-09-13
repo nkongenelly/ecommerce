@@ -9,6 +9,7 @@ use App\User;
 class Category extends Model
 {
     //
+    protected $touches = array('cuser');
     protected $guarded = [];
     protected $dates = [
         'created_at',
@@ -20,6 +21,6 @@ class Category extends Model
     }
 
     public function cuser(){
-        return $this->belongs(User::class);
+        return $this->belongsTo(User::class);
     }
 }

@@ -92,23 +92,34 @@ class ProductController extends Controller
      */
     public function features(Request $request,$id)
     {
-
         $product = Product::find($id);
         // dd($product);
         $user = auth()->user();
+        //get the feature_products table related to the clicked product to display their related text
+        // $featureproduct = DB::table('feature_product')->where('product_id',$id)->select('feature_id')->get();
+        // foreach($featureproduct){
+        //     $features=
+        // }
+       //find the feature row(s) with that feature_id from feature table
+        // $feature = Feature::where()
         // $features = Feature::all();
-        $features = $product->features();
+        $features = $product->features;
+    //    foreach($product->features as $role){
+        
+    //     echo $role->feature_name;
+    //    }
+       
         // $featureproduct = DB::table('feature_product')->where('product_id',$id)->get();
         // $featureproduct = FeatureProduct::where('product_id',$id)->select();
         // $features = $featureproduct->feature_id;
-        // dd($features);
+        // dd($featureproduct->feature_id);
         // $features = $features->products()->attach($product);
-        // dd($features);
-        $productfeaturess = DB::table('feature_product')->get()->toArray();
-        $productfeatures = $productfeaturess[0];
+        // dd($features->id);
+        // $productfeatures = DB::table('feature_product')->get();
+        // $productfeatures = $productfeaturess[0];
         // dd($productfeatures);
         // $productfeatures = ProductFeature::where('product_id',$id)->select('product_id','feature_id');
-        return view('products.featurepIndex',compact(['product','features','user','productfeatures']));
+        return view('products.featurepIndex',compact(['product','features','user']));
     }
 
     /**

@@ -63,7 +63,11 @@ class ProductFeatureController extends Controller
         // // dd($product);
         // $user = auth()->user();
         // $features = $product->features();
-        return redirect('/products');
+        $user = auth()->user($id);
+        // $products = Product::where('user_id',$user);
+        $products = Product::where('user_id',$id)->get();
+        // dd($products);
+        return view('products.indexP',compact('user','products'));
     }
 
     /**
@@ -85,7 +89,7 @@ class ProductFeatureController extends Controller
      */
     public function edit($id)
     {
-        $productfeatures = DB::table('feature_product')->where('id',$id)->get()->toArray();;
+        $productfeatures = DB::table('feature_product')->where('product_id',$id)->get()->toArray();;
 
         // $productfeatures =FeatureProduct::where('id',$id)->get()->toArray();
         // dd($productfeatures[0]->id);

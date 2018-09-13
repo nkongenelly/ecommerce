@@ -8,8 +8,9 @@ use App\Product;
 
 class Feature extends Model
 {
+    protected $touches = array('products');
     protected $guarded = [];
     public function products(){
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Product::class)->withTimestamps();;
     }
 }

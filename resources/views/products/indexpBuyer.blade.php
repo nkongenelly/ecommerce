@@ -10,6 +10,7 @@
             <th>Product description</th>
             <th>Product Price</th>
             <th>Created On</th>
+            <th colspan="1">Action</th>
         </tr>
         
         @if(count($products))
@@ -28,6 +29,9 @@
                 <td>{{ $product->product_description }}</td>
                 <td>{{ $product->product_price }}</td>
                 <td>{{ $product->created_at->diffForHumans() }}</td>
+                <td>
+                    <a href="/orders/create/{{ $product->id }}" class="btn btn-outline-success my-2 my-sm-0">Order</a>
+                </td>
             </tr>
             @endforeach
         @endif       

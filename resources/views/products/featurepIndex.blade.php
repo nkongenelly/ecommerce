@@ -7,7 +7,7 @@
         <tr>
             <th>#</th>
             <th>Product Name</th>
-            <th>Feature name</th>
+            <th>Feature Name</th>
             <th colspan="2">Action</th>
         </tr>
         @if(count($product->features))
@@ -16,12 +16,18 @@
                 
                     <td>{{ $product['id'] }}</td>
                     <td>{{ $product['product_name'] }}</td>
-                    <td>{{ $feature['feature_name'] }}</td>
                     <td>
-                        <a href="/productfeatures/{{ $productfeatures->id }}" class="btn btn-warning">Edit</a>
+                        <ol>
+                            @foreach($features as $feature)
+                               <ul>{{ $feature['feature_name'] }}</ul>
+                            @endforeach
+                        </ol>
                     </td>
                     <td>
-                        <a href="/productfeatures/delete/{{ $productfeatures->id }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
+                        <a href="/productfeatures/{{ $product['id'] }}" class="btn btn-warning">Edit</a>
+                    </td>
+                    <td>
+                        <a href="/productfeatures/delete/{{ $product['id'] }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
                     </td>
                 
                 </tr>

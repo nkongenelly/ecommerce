@@ -35,6 +35,20 @@ Route::patch('/categories/update/{id}', 'CategoryController@update');
 
 Route::get('/categories/delete/{id}', 'CategoryController@destroy');
 
+//Users
+Route::get('/users', 'UserController@index');
+
+Route::get('/users/create', 'UserController@create');
+
+Route::post('/users', 'UserController@store');
+
+Route::get('/users/edit/{id}', 'UserController@edit');
+
+Route::patch('/users/update/{id}', 'UserController@update');
+
+Route::get('/users/delete/{id}', 'UserController@destroy');
+
+
 //Products
 Route::get('/products/{id}', 'ProductController@index');
 
@@ -96,6 +110,18 @@ Route::patch('/productfeatures/update/{id}', 'ProductFeatureController@update');
 
 Route::get('/productfeatures/delete/{id}', 'ProductFeatureController@destroy');
 
+//Orders
+Route::get('/orders/{id}', 'OrderController@index');
+
+Route::get('/orders/create/{id}', 'OrderController@create');
+
+Route::post('/orders', 'OrderController@store');
+
+Route::get('/orders/edit/{id}', 'OrderController@edit');
+
+Route::patch('/orders/update/{id}', 'OrderController@update');
+
+Route::get('/orders/delete/{id}', 'OrderController@destroy');
 
 
 

@@ -48,8 +48,8 @@
         </li>
                        
         </ul>
-        <form action="/carts" method="POST" class="form-inline my-2 my-lg-0">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add to Cart</button>
+        <form action="/orders" method="GET" class="form-inline my-2 my-lg-0">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">My Cart</button>
         </form>
     </div>
     </nav>

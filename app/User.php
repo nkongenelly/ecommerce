@@ -18,6 +18,7 @@ class User extends Authenticatable
      *
      * @var array
      */
+    protected $touches = array('usertype');
     protected $fillable = [
         'name', 'email', 'password','usertype_id',
     ];
