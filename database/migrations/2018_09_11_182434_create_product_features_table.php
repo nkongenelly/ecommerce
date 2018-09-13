@@ -13,7 +13,7 @@ class CreateProductFeaturesTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_features', function (Blueprint $table) {
+        Schema::create('feature_product', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product_id');
             $table->integer('feature_id');

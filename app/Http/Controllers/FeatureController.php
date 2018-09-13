@@ -12,9 +12,18 @@ class FeatureController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    // public function __construct()
+    // {
+    //     $this->middleware('seller');
+    // }
+    public function index($id)
     {
-        $features = Feature::all();
+        $user = auth()->user($id);
+        // dd($user);
+        // $features = Feature::all();
+        $features = Feature::where('user_id',$id)->get();
+        // dd($features);
+
         return view('features.indexF',compact('features'));
     }
 
@@ -25,6 +34,7 @@ class FeatureController extends Controller
      */
     public function create()
     {
+        // dd("hallo");
         $user = auth()->user();
         return view('features.createF',compact('user'));
         
@@ -44,7 +54,10 @@ class FeatureController extends Controller
         ]);
 
         $features = Feature::create(request(['user_id','feature_name']));
-        return redirect('/features');
+        $user = auth()->user()->id;
+        $features = Feature::where('user_id',$user)->get();
+
+        return view('features.indexF',compact('features'));
     }
 
     /**
@@ -89,7 +102,10 @@ class FeatureController extends Controller
 
         Feature::where('id',$id)
             ->update(request(['user_id','feature_name']));
-        return redirect('/features');
+            $user = auth()->user()->id;
+            $features = Feature::where('user_id',$user)->get();
+    
+            return view('features.indexF',compact('features'));
     }
 
     /**

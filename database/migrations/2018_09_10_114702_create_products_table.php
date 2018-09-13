@@ -16,6 +16,7 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('product_name');
+            $table->integer('product_status');
             $table->double('product_price', 8, 2);
             $table->integer('user_id');
             $table->integer('category_id');
@@ -23,6 +24,12 @@ class CreateProductsTable extends Migration
             $table->text('product_description');
             $table->timestamps();
         });
+        // DB::table ('products')->insert(
+        //     array(
+        //     ['product_status' =>'In stock'],
+        //     ['product_status' =>'Out of stock']
+        //     )
+        //     );
     }
 
     /**

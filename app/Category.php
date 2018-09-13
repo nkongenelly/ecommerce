@@ -10,6 +10,11 @@ class Category extends Model
 {
     //
     protected $guarded = [];
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        // your other new column
+    ];
     public function products(){
         return $this->hasMany(Product::class);
     }

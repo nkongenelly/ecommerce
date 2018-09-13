@@ -3,16 +3,16 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\ProductFeature;
 use App\Category;
 use App\Product;
+use App\Feature;
 
 
 class Product extends Model
 {
     protected $guarded = [];
-    public function productfeatures(){
-        return $this->hasMany(ProductFeature::class);
+    public function features(){
+        return $this->belongsToMany(Feature::class);
     }
     public function category(){
         return $this->belongsTo(Category::class);

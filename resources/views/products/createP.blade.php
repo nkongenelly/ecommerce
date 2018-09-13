@@ -4,18 +4,28 @@
     <form action="/products" method="POST" class="form-horizontal">
         {{ csrf_field() }}
         <div class="form-control">
-            <select name="category_id">
-                <option value="0">--No Category--</option>
-               
-                    @foreach($categories as $category)
-                        <option value="{{$category->id}}">{{$category->category_name}}</option>
-                    @endforeach
-               
-            </select>
+            <div class="form-group">
+                <select name="category_id">
+                    <option value="0">--No Category--</option>
+                
+                        @foreach($categories as $category)
+                            <option value="{{$category->id}}">{{$category->category_name}}</option>
+                        @endforeach
+                
+                </select>
+            </div>
             <input type="hidden" name="user_id" value="{{ $user['id'] }}">
             <div class="form-group">
                 <label>Product name</label>
                 <input type="text" class="form-control" placeholder="Type the product name" name="product_name">
+            </div>
+            <div class="form-group">
+                <select name="product_status">
+                    <option value="0">--Choose Status--</option>
+                    <option value="1">In Stock</option>
+                    <option value="2">Out of Stock</option>
+                
+                </select>
             </div>
             <div class="form-group">
                 <label>Product Price</label>

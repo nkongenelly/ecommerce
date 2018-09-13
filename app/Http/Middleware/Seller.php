@@ -19,9 +19,13 @@ class Seller
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {
+    { 
+        // dd("hallo");
         if($request->user() && $request->user()->usertype_id == '3'){
-            $products = Product::all();
+            $seller = $request->user()->id;
+            $products = Product::where('user_id',$seller)->get();
+            // $products = Product::all();
+            // dd($products);
             // return redirect('home')->with('error','You do not have admin access');
             return new Response(view('products.indexP',compact('products'))->with('role','SELLER'));
         }

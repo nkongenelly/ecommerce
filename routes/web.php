@@ -10,6 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Category;
+use App\Product;
+use App\User;
+use App\Feature;
+use App\FeatureProduct;
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,23 +35,16 @@ Route::patch('/categories/update/{id}', 'CategoryController@update');
 
 Route::get('/categories/delete/{id}', 'CategoryController@destroy');
 
-//Users
-Route::get('/users', 'UserController@index');
-
-Route::get('/users/create', 'UserController@create');
-
-Route::post('/users', 'UserController@store');
-
-Route::get('/users/edit/{id}', 'UserController@edit');
-
-Route::patch('/users/update/{id}', 'UserController@update');
-
-Route::get('/users/delete/{id}', 'UserController@destroy');
-
 //Products
-Route::get('/products', 'ProductController@index');
+Route::get('/products/{id}', 'ProductController@index');
 
-Route::get('/products/create', 'ProductController@create');
+Route::get('/productss/create', 'ProductController@create');  
+
+// Route::get('/featuress/create', function () {
+//     dd("hallo");
+// $user = auth()->user();
+// return view('features.createF',compact('user'));
+// });
 
 Route::post('/products', 'ProductController@store');
 
@@ -57,9 +57,9 @@ Route::patch('/products/update/{id}', 'ProductController@update');
 Route::get('/products/delete/{id}', 'ProductController@destroy');
 
 //Features
-Route::get('/features', 'FeatureController@index');
+Route::get('/features/{id}', 'FeatureController@index');
 
-Route::get('/features/create', 'FeatureController@create');
+Route::get('/featuress/create', 'FeatureController@create');
 
 Route::post('/features', 'FeatureController@store');
 
@@ -70,9 +70,17 @@ Route::patch('/features/update/{id}', 'FeatureController@update');
 Route::get('/features/delete/{id}', 'FeatureController@destroy');
 
 //ProductFeatures
-Route::post('/productfeatures', 'ProductFeatureController@store');
+Route::post('/productfeatures/{id}', 'ProductFeatureController@store');
+
+Route::get('/productfeatures/create/{id}', 'ProductFeatureController@create');
 
 Route::patch('/productfeatures/update/{id}', 'ProductFeatureController@update');
+
+Route::get('/productfeatures/{id}', 'ProductFeatureController@edit');
+
+Route::patch('/productfeatures/update/{id}', 'ProductFeatureController@update');
+
+Route::get('/productfeatures/delete/{id}', 'ProductFeatureController@destroy');
 
 //Auth and middlewre
 

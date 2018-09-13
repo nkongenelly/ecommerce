@@ -17,7 +17,7 @@
                 <td>{{ $category->id }}</td>
                 <td>{{ $category->category_parent }}</td>
                 <td>{{ $category->category_name }}</td>
-                <td>{{ $category->created_at->toFormattedDateString() }}</td>
+                <td>{{ $category->created_at->diffForHumans() }}</td>
                 <td>
                     <a href="/categories/edit/{{ $category->id }}" class="btn btn-warning">Edit</a>
                 </td>

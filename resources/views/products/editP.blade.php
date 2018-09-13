@@ -1,12 +1,12 @@
 @extends('layoutsSeller')
 
 @section('content')
-    <form action="/products/update/{{ $product->id }}" method="POST" class="form-horizontal">
+    <form action="/products/update/{{ $product['id'] }}" method="POST" class="form-horizontal">
         {{ csrf_field() }}
         {{ method_field('PATCH') }}
         <div class="form-control">
             <select name="category_id">
-                <option value="{{$product->category->id}}">{{$product->category->category_name}}</option>
+                
                
                     @foreach($categories as $category)
                         <option value="{{$category->id}}">{{$category->category_name}}</option>
@@ -16,7 +16,15 @@
             <input type="hidden" name="user_id" value="{{ $user['id'] }}">
             <div class="form-group">
                 <label>Product name</label>
-                <input type="text" class="form-control" value="{{ $product->product_name }}" name="product_name">
+                <input type="text" class="form-control" value="{{ $product['product_name'] }}" name="product_name">
+            </div>
+            <div class="form-group">
+                <select name="product_status">
+                    <option value="{{ $product['product_name'] }}">{{ $product['product_status'] }}</option>
+                    <option value="1">In Stock</option>
+                    <option value="2">Out of Stock</option>
+                
+                </select>
             </div>
             <div class="form-group">
                 <label>Product Price</label>

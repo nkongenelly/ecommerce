@@ -12,13 +12,15 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __constructor(){
-        $this->middleware('auth');
-    }
+    // public function __constructor(){
+    //     $this->middleware('admin');
+    // }
+    
 
     public function index()
     {
         $categories = Category::all();
+        // dd($categories);
         return view('categories.indexC',compact('categories'));
     }
 

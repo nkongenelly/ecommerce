@@ -4,11 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\ProductFeature;
+use App\Product;
 
 class Feature extends Model
 {
     protected $guarded = [];
-    public function productfeatures(){
-        return $this->hasMany(ProductFeature::class);
+    public function products(){
+        return $this->belongsToMany(Product::class);
     }
 }

@@ -6,10 +6,12 @@
     <title>eCommerce</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/custom.css">
     <script src="main.js"></script>
     <script src="/js/custom.js"></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -21,20 +23,14 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
         <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Products
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <select name="" id="" class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <option value="">
-                <a class="dropdown-item" href="/products">All Products</a>
-                </option>
-                <option value="">
-                    <a class="dropdown-item" href="/features">Features</a>
-                </option>
-            </select>
-        </div>
-      </li>
+            <div class="dropdown">
+                <button class="dropbtn">Products</button>
+                <div class="dropdown-content">
+                    <a class="nav-link"  href="/products/{{ Auth::user()->id  }}">All Products</a>
+                    <a class="nav-link"  href="/features/{{ Auth::user()->id  }}">Features</a>
+                </div>
+            </div>
+        </li>
         
         <li class="nav-item">
             <a class="nav-link" href="/orders">Orders</a>
@@ -43,22 +39,21 @@
             <a class="nav-link" href="/reviews">Reviews</a>
         </li>
         <li class="nav-item dropdown">
-            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                {{ Auth::user()['name'] }} <span class="caret"></span>
-            </a>
-
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{ route('logout') }}"
-                    onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">
-                    {{ __('Logout') }}
-                </a>
-
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            <div class="dropdown">
+                <button class="dropbtn"> {{ Auth::user()->name }}</button>
+                <div class="dropdown-content">
+                    <a class="nav-link" href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>
+                </div>
             </div>
         </li>
+                       
         </ul>
         <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

@@ -1,7 +1,8 @@
 @extends('layoutsSeller')
 
 @section('content')
-    <a href="/features/create" class="btn btn-warning">Add Feature</a>
+    <a href="/featuress/create" class="btn btn-warning">Add Feature</a>
+    <a href="/products" class="btn btn-warning">Add Product Feature</a>
     <table class="table table-condensed table-striped table-hover table-bordered">
         <tr>
             <th>#</th>
