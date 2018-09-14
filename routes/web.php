@@ -1,5 +1,5 @@
 <?php
-
+ini_set('max_execution_time', '300');
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -111,13 +111,17 @@ Route::patch('/productfeatures/update/{id}', 'ProductFeatureController@update');
 Route::get('/productfeatures/delete/{id}', 'ProductFeatureController@destroy');
 
 //Orders
-Route::get('/orders/{id}', 'OrderController@index');
+// Route::get('/orders/{id}', 'OrderController@index');//for vie cart table format
+
+Route::get('/orders/viewcart', 'OrderController@getCart');
 
 Route::get('/ordersbuyer/{id}', 'OrderController@ordersbuyer');
 
 Route::get('/ordersseller', 'OrderController@ordersseller');
 
-Route::get('/orders/cart/{id}/{product}', 'OrderController@cart');
+Route::get('/orders/cart/{id}/{product}', 'OrderController@cart');//for add to cart table format
+//for add to cart table format
+Route::get('/orders/cart/{id}', 'OrderController@getAddToCart');
 
 Route::get('/orders/create/{id}', 'OrderController@create');//for status placed
 

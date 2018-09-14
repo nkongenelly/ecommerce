@@ -26,14 +26,14 @@
             <a class="nav-link" href="/productsbuyer">Products</a>
         </li>
        <li class="nav-item">
-            <a class="nav-link" href="/ordersbuyer/{{ Auth::user()->id }}">Orders</a>
+            <a class="nav-link" href="/ordersbuyer/{{ Auth::user()['id'] }}">Orders</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="/reviewsbuyer">Reviews</a>
         </li>
         <li class="nav-item dropdown">
             <div class="dropdown">
-                <button class="dropbtn"> {{ Auth::user()->name }}</button>
+                <button class="dropbtn"> {{ Auth::user()['name'] }}</button>
                 <div class="dropdown-content">
                     <a class="nav-link" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
@@ -48,8 +48,11 @@
         </li>
                        
         </ul>
-        <form action="/orders/{{ Auth::user()->id }}" method="GET" class="form-inline my-2 my-lg-0">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">My Cart</button>
+        <form action="/orders/viewcart" method="GET" class="form-inline my-2 my-lg-0">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+            <i class="fa fa-shopping-cart" aria-hidden="true"></i> Shopping Cart
+            <span class="badge">({{ Session::has('cart') ? Session::get('cart')->totalQty : '' }})</span>
+        </button>
         </form>
     </div>
     </nav>

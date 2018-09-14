@@ -1,4 +1,4 @@
-@extends('layoutsSeller')
+@extends('layoutsBuyer')
 
 @section('content')
 <a href="/productsbuyer" class="btn btn-warning">Back</a>
@@ -14,7 +14,7 @@
                 @if($order->order_status_id = 2)
                     <tr>
                         @foreach($products as $product)
-                        
+                                                    
                             <td>{{ $product['id'] }}</td>
                             <td>{{ $product['product_name'] }}</td>
                                 

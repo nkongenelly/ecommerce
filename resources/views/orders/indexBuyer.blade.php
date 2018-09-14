@@ -7,37 +7,36 @@
             <th>#</th>
             <th>Product Name</th>
             <th>Product description</th>
-            <th>Product Price</th>
-            <th>Action</th>
+            <th>No. of Orders</th>
+            <th>Product Price @</th>
+            <th colspan="2">Action</th>
             <th>Placed Order</th>
-        </tr>
-        @if(array($orders))
-            @foreach($orders as $order)
-            <tr>
-                @foreach($productss as $product)
-                        
-                            <td>{{ $product['id'] }}</td>
-                            <td>{{ $product['product_name'] }}</td>
-                                
-                            <td>{{ $product['product_description'] }}</td>
-                            <td>{{ $product['product_price'] }}</td>
-                            <td>
-                                <a href="/orders/create/{{ $product['id'] }}" class="btn btn-outline-success my-2 my-sm-0">Place Orders</a>
-                            </td>
-                            <td>
-                              
-                                    @if($order->order_status_id = '1')
-                                        <strong>No</strong>
-                                    @else
-                                        <strong>Yes</strong>
-                                    @endif
-                              
-                            </td>  
-                            @endforeach
-                        </tr>
-               
-            @endforeach
-        @endif
+            
+                @foreach($products as $item)
+                    <tr>
+                        <td>{{ $item['item']->id }}</td>
+                        <td>{{ $item['item']->product_name }}</td>
+                            
+                        <td>{{ $item['item']->product_description }}</td>
+                        <td><span class="badge">{{ $item['quantity'] }}</span></td>
+                        <td>{{ $item['item']->product_price }}</td>
+                        <td>
+                            <a href="/orders/create/{{ $item['item']->id }}" class="btn btn-outline-success my-2 my-sm-0">Place Orders</a>
+                        </td>
+                        @foreach($orders as $order)
+                        <td>
+                            
+                                @if($order->order_status_id = '1')
+                                    <strong>No</strong>
+                                @else
+                                    <strong>Yes</strong>
+                                @endif
+                           
+                        </td> 
+                        @endforeach
+                    </tr>
+                 @endforeach
+    
            
     
     </table>

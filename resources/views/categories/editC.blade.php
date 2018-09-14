@@ -14,7 +14,7 @@
                 <input type="text" class="form-control" value="{{$category->category_name}}" name="category_name">
             </div>
             <a href="/categories" class="btn btn-warning">Back</a>
-            <button type="submit" class="btn btn-primary">Create</button>
+            <button type="submit" class="btn btn-primary">Edit</button>
 
            
         </div>

@@ -32,7 +32,7 @@
                         <td>{{ $product->product_price }}</td>
                         <td>{{ $product->created_at->diffForHumans() }}</td>
                         <td>
-                            <a href="/orders/cart/{{ Auth::user()->id }}/{{ $product->id }}" class="btn btn-outline-success my-2 my-sm-0">Add to Cart</a>
+                            <a href="/orders/cart/{{ $product->id }}" class="btn btn-outline-success my-2 my-sm-0">Add to Cart</a>
                         </td>
                     </tr>
                 @endforeach

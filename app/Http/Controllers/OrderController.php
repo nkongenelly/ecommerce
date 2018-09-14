@@ -8,6 +8,8 @@ use App\Order;
 use App\Product;
 use App\OrderStatus;
 use App\OrderItems;
+use App\Cart;
+use Session;
 class OrderController extends Controller
 {
     /**
@@ -64,6 +66,7 @@ class OrderController extends Controller
                 $productss = $order->product_id;
                 $products = Product::where('id',$productss)->get();
                 foreach($products as $product){
+                    
                 }
             }
         }
@@ -72,7 +75,10 @@ class OrderController extends Controller
 
     }
     public function ordersbuyer($id){
-        $orders = DB::table('orders')->where('user_id',$id)->get();
+        $orders = DB::table('orders')->where([
+            'user_id'=>$id,
+            'order_status_id' =>2,
+            ])->get();
         // $orders = Order::where('user_id',$id)->select('order_status_id')->get();
         // $products =0;
         $count =0;
@@ -81,9 +87,16 @@ class OrderController extends Controller
                 $productss = $order->product_id;
                 $products = Product::where('id',$productss)->get();
                 foreach($products as $product){
+                    $group = $product->product_name;
+                    $abs = $products->groupBy($group);
+                    foreach($abs as $abc){
+
+                    }
+                    // dd(boolean($order->order_status_id = 2));
                 }
             }
         }
+        
         // dd($orders->order_status_id);
         return view('orders.indexOBuyer',compact('orders','products'));
 
@@ -114,6 +127,79 @@ class OrderController extends Controller
         // dd('orderstatusd');
         return redirect('/productsbuyer');
     }
+
+    public function getAddToCart(Request $request, $id) {
+        $product = Product::find($id);
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->add($product, $product->id);
+        $request->session()->put('cart', $cart);
+
+        $user = auth()->user()->id;
+        $status = 1;
+        Order::create([
+            'user_id' => $user,
+            'order_status_id' =>$status,
+            'product_id' =>$id,
+        ]);
+        return redirect('/productsbuyer');
+    }
+
+    public function getCart(){
+        if (!Session::has('cart')) {
+            return view('shop.shopping-cart');
+        }
+        $oldCart = Session::get('cart');
+        $cart = new Cart($oldCart);
+      $carts = $cart->items;
+      foreach($cart->items as $item){
+          $productss = $item['item']->id;
+        $orders = Order::where('product_id',$productss)->get();
+        foreach($orders as $order){
+            // dd($order->order_status_id);
+        }
+      }
+      foreach($carts as $product){
+        $productss = $product['product_id'];
+        $products=Product::find($productss);
+        $users = auth()->user()['id'];
+        
+      }
+      return view('orders.indexBuyer',['products' => $cart->items, 'totalPrice' => $cart->totalPrice],compact('orders'));
+        // return view('orders.indexBuyer', compact('order','products'));
+    }
+
+
+    //     $users = auth()->user()->id;
+    //     $orders = Order::where('user_id',$users)->get();
+    //     // $visits = Order::where()
+    //     //     ->join('order_items', 'order_items.product_id', '=', 'orders.product_id')
+    //     //     ->join('products', 'products.product_id', '=', 'order_items.product_id')
+    //     //     ->select('products.product_name', 'products.product_feature','products.product_description','products.product_price')
+    //     //     ->get();
+    //     //     // dd($visits);
+    //     // dd($orders);
+    //     foreach($orders as $order){
+    //         $orderss = $order->product_id;
+    //         $acb = $order->order_status_id;
+    //         // dd(array($order));
+    //         // dd($order->product_id);
+    //         $productss = Product::where('id',$orderss)->get();
+    //         // dd($productss);
+    //        foreach($productss as $products){
+
+    //         $product=$products->product_name;
+    //         // dd($product);
+    //        } 
+    //     // dd($products->product_name);
+    //    }
+    // //    dd($productss);
+    //     return view('orders.indexBuyer',compact('orders','productss','products'));
+        //}
+        
+       
+    //}
+    
 
     /**
      * Store a newly created resource in storage.
@@ -177,7 +263,8 @@ class OrderController extends Controller
                   $orderss = $order->product_id;
                   $productss = Product::where('id',$orderss)->get();
              }
-             return view('orders.indexBuyer',compact('orders','productss','products'));
+            //  return view('orders.indexBuyer',compact('orders','productss','products'));
+            return redirect('/productsbuyer');
     }
 
     /**
