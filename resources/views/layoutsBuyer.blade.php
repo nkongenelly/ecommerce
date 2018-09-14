@@ -26,7 +26,7 @@
             <a class="nav-link" href="/productsbuyer">Products</a>
         </li>
        <li class="nav-item">
-            <a class="nav-link" href="/ordersbuyer">Orders</a>
+            <a class="nav-link" href="/ordersbuyer/{{ Auth::user()->id }}">Orders</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="/reviewsbuyer">Reviews</a>

@@ -33,7 +33,7 @@
         </li>
         
         <li class="nav-item">
-            <a class="nav-link" href="/orders">Orders</a>
+            <a class="nav-link" href="/ordersseller">Orders</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="/reviews">Reviews</a>

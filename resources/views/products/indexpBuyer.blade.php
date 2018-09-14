@@ -14,7 +14,8 @@
         </tr>
         
         @if(count($products))
-            @foreach($products as $product)
+            
+            
                 @foreach($products as $product)
                     <tr>
                         <td>{{ $product->id }}</td>
@@ -35,7 +36,7 @@
                         </td>
                     </tr>
                 @endforeach
-            @endforeach
+                
         @endif       
        
     
