@@ -4,7 +4,7 @@
 <a href="/productsbuyer" class="btn btn-warning">Back</a>
     <table class="table table-condensed table-striped table-hover table-bordered">
         <tr>
-            <th>#</th>
+            <th>Order No.</th>
             <th>Product Name</th>
             <th>Product description</th>
             <th>Product Price</th>
@@ -15,7 +15,7 @@
                     <tr>
                         @foreach($products as $product)
                                                     
-                            <td>{{ $product['id'] }}</td>
+                            <td>{{ $order->id }}</td>
                             <td>{{ $product['product_name'] }}</td>
                                 
                             <td>{{ $product['product_description'] }}</td>

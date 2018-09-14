@@ -117,7 +117,11 @@ Route::get('/orders/viewcart', 'OrderController@getCart');
 
 Route::get('/ordersbuyer/{id}', 'OrderController@ordersbuyer');
 
-Route::get('/ordersseller', 'OrderController@ordersseller');
+Route::get('/ordersseller', 'OrderController@ordersseller');//seller view all orders
+
+Route::get('/orderview/{id}/{order}', 'OrderController@orderview');//seller view single order
+
+Route::get('/orderscomplete/{id}/{order}', 'OrderController@orderscomplete');
 
 Route::get('/orders/cart/{id}/{product}', 'OrderController@cart');//for add to cart table format
 //for add to cart table format

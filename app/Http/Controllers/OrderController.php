@@ -56,6 +56,7 @@ class OrderController extends Controller
      */
     public function ordersseller(){
         //Get Ordered products whose status are 2 for each user
+        $user = auth()->user()->id;
         $orders = Order::where('order_status_id',2)->get();
         // $products =0;
         $count =0;
@@ -64,7 +65,10 @@ class OrderController extends Controller
                 $buyers = $order->user_id;
                 $buyer = auth()->user()->find($buyers)->name;
                 $productss = $order->product_id;
-                $products = Product::where('id',$productss)->get();
+                $products = Product::where([
+                    'id'=>$productss,
+                    'user_id'=>$user,
+                    ])->get();
                 foreach($products as $product){
                     
                 }
@@ -74,6 +78,44 @@ class OrderController extends Controller
         return view('orders.indexSeller',compact('orders','products','buyer'));
 
     }
+
+    public function orderscomplete($id, $order){
+        //update order_status to completed
+        $statuss = 3;
+        $status = Order::where('id',$order)
+                        ->update([
+                            'id' => $order,
+                            'user_id' => $order,
+                            'order_status_id' => $statuss,
+                        ]);
+        return $this->ordersseller();
+
+    }
+
+    public function orderview( $id, $order){
+        $orderss = Order::where('id',$order)->select(['user_id'])->get();
+        foreach($orderss as $orders){
+            $single = $orders->user_id;
+            $user = auth()->user($single)->name;   
+            // dd($user);
+        }
+        $quantities = OrderItems::where('order_id',$order)->select(['quantity'])->get();
+        foreach($quantities as $quantitys){
+            $quantity = $quantitys->quantity;
+            
+        }
+        $productss = Product::where('id',$id)->select(['product_name','product_price'])->get();
+        foreach($productss as $products){
+            $product = $products->product_name;
+            $price =  $products->product_price;
+            $created = $products->created_at;
+            // dd($created);
+        }
+       
+        return view('orders.orderSingleSeller',compact('user','quantity','product','price','order','id'));
+
+    }
+
     public function ordersbuyer($id){
         $orders = DB::table('orders')->where([
             'user_id'=>$id,
@@ -263,8 +305,11 @@ class OrderController extends Controller
                   $orderss = $order->product_id;
                   $productss = Product::where('id',$orderss)->get();
              }
+
             //  return view('orders.indexBuyer',compact('orders','productss','products'));
-            return redirect('/productsbuyer');
+             $user =request(['user_id']);
+            return $this->ordersbuyer($user);
+            // return redirect('/ordersbuyer/{{ Auth::user()["id"] }}');
     }
 
     /**

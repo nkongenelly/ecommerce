@@ -137,7 +137,9 @@ class ProductFeatureController extends Controller
             ->update(request(['product_id','feature_id']));
 
 
-            return redirect('/products');
+            $user = auth()->user()->id;
+            $products = Product::where('user_id',$id)->get();
+            return view('products.indexP',compact('user','products'));
     }
 
     /**

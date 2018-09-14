@@ -117,7 +117,10 @@ class FeatureController extends Controller
     public function destroy($id)
     {
         Feature::where('id',$id)
-            ->delete();
-            return redirect('/features');
+            ->delete();  $user = auth()->user($id);
+            $user = auth()->user($id);
+            $features = Feature::where('user_id',$id)->get();
+    
+            return view('features.indexF',compact('features'));
     }
 }
