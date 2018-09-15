@@ -85,7 +85,7 @@ class OrderController extends Controller
         $status = Order::where('id',$order)
                         ->update([
                             'id' => $order,
-                            'user_id' => $order,
+                            'user_id' => $id,
                             'order_status_id' => $statuss,
                         ]);
         return $this->ordersseller();
@@ -95,9 +95,14 @@ class OrderController extends Controller
     public function orderview( $id, $order){
         $orderss = Order::where('id',$order)->select(['user_id'])->get();
         foreach($orderss as $orders){
-            $single = $orders->user_id;
-            $user = auth()->user($single)->name;   
-            // dd($user);
+            $userid = $orders->user_id;
+            $userss = auth()->user()->where('id',$userid)->get(); 
+            foreach($userss as $users){
+                $user = $users->name;
+                // dd($userid);
+            }
+            // $userid = auth()->user($single)->id;  
+            
         }
         $quantities = OrderItems::where('order_id',$order)->select(['quantity'])->get();
         foreach($quantities as $quantitys){
@@ -112,7 +117,7 @@ class OrderController extends Controller
             // dd($created);
         }
        
-        return view('orders.orderSingleSeller',compact('user','quantity','product','price','order','id'));
+        return view('orders.orderSingleSeller',compact('user','quantity','product','price','order','userid'));
 
     }
 
@@ -144,6 +149,32 @@ class OrderController extends Controller
 
     }
 
+    public function ordersbuyercomplete($id){
+        $orders = DB::table('orders')->where([
+            'user_id'=>$id,
+            'order_status_id' =>3,
+            ])->get();
+        // $orders = Order::where('user_id',$id)->select('order_status_id')->get();
+        // $products =0;
+        $count =0;
+        foreach($orders as $order){
+            if($order->order_status_id = 3){
+                $productss = $order->product_id;
+                $products = Product::where('id',$productss)->get();
+                foreach($products as $product){
+                    $group = $product->product_name;
+                    $abs = $products->groupBy($group);
+                    foreach($abs as $abc){
+
+                    }
+                    // dd(boolean($order->order_status_id = 2));
+                }
+            }
+        }
+        
+        // dd($orders->order_status_id);
+        return view('orders.indexOBuyerComplete',compact('orders','products'));
+    }
 
     public function create($id)
     {
@@ -257,60 +288,72 @@ class OrderController extends Controller
             'product_id' => 'required',
             'quantity' => 'required',
         ]);
-        $abcd = Order::create(request([
-            'user_id','order_status_id','product_id'
-        ]))->orderBy('created_at','desc')->first()->id;
-        // dd($abcd);
-        // $orderitems = request(['user_id','order_status_id','product_id','quantity']);
-        $result = Order::where('order_status_id',request(['order_status_id'] )&& 'user_id',request(['user_id']) )->select('id')->get();
-        // dd($orderitems);
-        $prices = $request->product_id;
-        $pricess = Product::find($prices);
-        $pricesss = $pricess->product_price;
-        // dd($pricesss);
-        $price = $request->price=$pricesss;
-        // $result = $results['user_id'];
-        // $orderitems = OrderItems::where('id', $result)->select('id')->get();
-        // dd($result);
-        foreach($result as $orderitems){
-            $orderitem = $orderitems->id;
-            // dd(array('product_id'=>request(['product_id'])));
-        }
-        // $result = array (json_encode(orderitem),'product_id','');
-        // dd($orderitem);
-        // $orders = Order::find();
-        // foreach($result as $orderitems){
-        //     $orderitem = $orderitems->id;
-        $ab = array(
-            'order_id'=>json_encode($abcd),
-            request(['product_id']),
-            request(['quantity']),
-            'price'=>json_encode($pricesss),
-        );
-        // dd(request(['product_id','quantity']));
-        // dd(request(['product_id'])['product_id']);
-        OrderItems::create(array(
-            'order_id'=>json_encode($abcd),
-            'product_id'=>request(['product_id'])['product_id'],
-            'quantity'=>request(['quantity'])['quantity'],
-            'price'=>json_encode($pricesss),
-            ));
-            // dd('okay');
-            // dd($abc);
-        // }
-            // dd($abc);
-            // $orders = Order::all();
-            $orders = Order::where('user_id',request(['user_id'])['user_id'])->get();
-              foreach($orders as $order){
-                  $orderss = $order->product_id;
-                  $productss = Product::where('id',$orderss)->get();
-             }
+                $abcd = Order::create(request([
+                    'user_id','order_status_id','product_id'
+                ]))->orderBy('created_at','desc')->first()->id;
+                // dd($abcd);
+                // $orderitems = request(['user_id','order_status_id','product_id','quantity']);
+                $result = Order::where('order_status_id',request(['order_status_id'] )&& 'user_id',request(['user_id']) )->select('id')->get();
+                // dd($orderitems);
+                $prices = $request->product_id;
+                $pricess = Product::find($prices);
+                $pricesss = $pricess->product_price;
+                // dd($pricesss);
+                $price = $request->price=$pricesss;
+                // $result = $results['user_id'];
+                // $orderitems = OrderItems::where('id', $result)->select('id')->get();
+                // dd($result);
+                foreach($result as $orderitems){
+                    $orderitem = $orderitems->id;
+                    // dd(array('product_id'=>request(['product_id'])));
+                }
+                // $result = array (json_encode(orderitem),'product_id','');
+                // dd($orderitem);
+                // $orders = Order::find();
+                // foreach($result as $orderitems){
+                //     $orderitem = $orderitems->id;
+                $ab = array(
+                    'order_id'=>json_encode($abcd),
+                    request(['product_id']),
+                    request(['quantity']),
+                    'price'=>json_encode($pricesss),
+                );
+                // dd(request(['product_id','quantity']));
+                // dd(request(['product_id'])['product_id']);
+                OrderItems::create(array(
+                    'order_id'=>json_encode($abcd),
+                    'product_id'=>request(['product_id'])['product_id'],
+                    'quantity'=>request(['quantity'])['quantity'],
+                    'price'=>json_encode($pricesss),
+                    ));
+                    // dd('okay');
+                    // dd($abc);
+                // }
+               $productquantititess =  Product::where('id',request(['product_id'])['product_id'])->select('Product_quantity','id')->get();
+                foreach($productquantititess as $productquantitites){
+                    if($productquantitites->id = request(['product_id'])['product_id'] ){
+                        // dd(($productquantitites->Product_quantity) - (request(['quantity'])['quantity']));
+                        Product::where('id', request(['product_id'])['product_id'])
+                                ->update([
+                                    'Product_quantity' =>($productquantitites->Product_quantity) - (request(['quantity'])['quantity'])
+                        ]);
+                    }
+                }
+                    // dd($abc);
+                    // $orders = Order::all();
+                    $orders = Order::where('user_id',request(['user_id'])['user_id'])->get();
+                    foreach($orders as $order){
+                        $orderss = $order->product_id;
+                        $productss = Product::where('id',$orderss)->get();
+                    }
 
-            //  return view('orders.indexBuyer',compact('orders','productss','products'));
-             $user =request(['user_id']);
-            return $this->ordersbuyer($user);
-            // return redirect('/ordersbuyer/{{ Auth::user()["id"] }}');
-    }
+                    //  return view('orders.indexBuyer',compact('orders','productss','products'));
+                    $user =request(['user_id']);
+                    return $this->ordersbuyer($user);
+                    // return redirect('/ordersbuyer/{{ Auth::user()["id"] }}');
+                }
+    //     }
+    // }  
 
     /**
      * Display the specified resource.

@@ -25,6 +25,7 @@ class ProductController extends Controller
         $user = auth()->user($id);
         // $products = Product::where('user_id',$user);
         $products = Product::where('user_id',$id)->get();
+
         // dd($products);
         return view('products.indexP',compact('user','products'));
     }
@@ -70,15 +71,18 @@ class ProductController extends Controller
             'product_status' => 'required',
             'product_price' => 'required',
             'product_description' => 'required',
+            'Product_quantity' => 'required',
         ]);
-        
-        // dd('hello');
-        Product::create(request(['product_name','product_status','product_price','product_description','user_id','category_id']));
 
         $user = auth()->user()->id;
         // $products = Product::where('user_id',$user);
         $products = Product::where('user_id',$user)->get();
         // dd($products);
+        
+        // dd('hello');
+        Product::create(request(['product_name','product_status','product_price','user_id','category_id','product_description','Product_quantity']));
+
+        
         return view('products.indexP',compact('user','products'));
         
 

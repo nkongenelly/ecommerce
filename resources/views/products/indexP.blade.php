@@ -10,6 +10,7 @@
             <th>Product Status</th>
             <th>Product price</th>
             <th>Product description</th>
+            <th>Product Quantity</th>
             <th>Created On</th>
             <th colspan="3">Action</th>
         </tr>
@@ -20,15 +21,17 @@
                 <td>{{ $product->id }}</td>
                 <td>{{ $product->category['category_name'] }}</td>
                 <td>{{ $product['product_name'] }}</td>
-               
-                    @if($product['product_status="1"'])
-                        <td>In Stock</td>
-                    @else($product['product_status="2"'])
-                        <td>Out of Stock</td>
+                <td>({{ $product['product_status'] }})
+                    @if($product['product_status']=1)
+                        <h5>In Stock</h5>
+                    @else($product['product_status']=2)
+                        <h5>Out of Stock</h5>
                     @endif
+                </td>
                
                 <td>{{ $product['product_price'] }}</td>
                 <td>{{ $product['product_description'] }}</td>
+                <td>{{ $product['Product_quantity'] }}</td>
                 <td>{{ $product['created_at->diffForHumans()'] }}</td>
                 <td>
                     <a href="/products/features/{{ $product['id'] }}" class="btn btn-warning">Features</a>

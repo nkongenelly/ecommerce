@@ -1,5 +1,5 @@
 <?php
-ini_set('max_execution_time', '300');
+// ini_set('max_execution_time', '300');
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -115,7 +115,9 @@ Route::get('/productfeatures/delete/{id}', 'ProductFeatureController@destroy');
 
 Route::get('/orders/viewcart', 'OrderController@getCart');
 
-Route::get('/ordersbuyer/{id}', 'OrderController@ordersbuyer');
+Route::get('/ordersbuyer/{id}', 'OrderController@ordersbuyer');//for pending orders ordersbuyercomplete
+
+Route::get('/ordersbuyercomplete/{id}', 'OrderController@ordersbuyercomplete');//for completed orders
 
 Route::get('/ordersseller', 'OrderController@ordersseller');//seller view all orders
 

@@ -26,7 +26,14 @@
             <a class="nav-link" href="/productsbuyer">Products</a>
         </li>
        <li class="nav-item">
-            <a class="nav-link" href="/ordersbuyer/{{ Auth::user()['id'] }}">Orders</a>
+            <div class="dropdown">
+                <button class="dropbtn">Orders</button>
+                <div class="dropdown-content">
+                    <a class="nav-link" href="/ordersbuyer/{{ Auth::user()['id'] }}">Pending</a>
+                    <a class="nav-link" href="/ordersbuyercomplete/{{ Auth::user()['id'] }}">Completed</a>
+                </div>
+            </div>
+            
         </li>
         <li class="nav-item">
             <a class="nav-link" href="/reviewsbuyer">Reviews</a>

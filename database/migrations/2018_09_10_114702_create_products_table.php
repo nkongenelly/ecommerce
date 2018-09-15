@@ -20,8 +20,9 @@ class CreateProductsTable extends Migration
             $table->double('product_price', 8, 2);
             $table->integer('user_id');
             $table->integer('category_id');
-            // $table->ineger('product_image');
+            $table->integer('product_image')->nullable();
             $table->text('product_description');
+            $table->integer('Product_quantity')->nullable();
             $table->timestamps();
         });
         // DB::table ('products')->insert(

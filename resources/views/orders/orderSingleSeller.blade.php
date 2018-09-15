@@ -22,7 +22,7 @@
                     <td>{{ $quantity }}</td>               
                     <td>{{ $price}}</td>
                     <td>
-                        <a href="/orderscomplete/{{ $user }}/{{ $order }}" class="btn btn-warning">Complete Order</a>
+                        <a href="/orderscomplete/{{ $userid }}/{{ $order }}" class="btn btn-warning">Complete Order</a>
                     </td>
                 </tr>
             

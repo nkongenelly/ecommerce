@@ -35,7 +35,13 @@
                 <label>Product Description</label>
                 <textarea class="form-control" placeholder="Type the product description" name="product_description"></textarea>
             </div>
+            <div class="form-group">
+                <label>Product Quantity</label>
+                <input type="number" class="form-control" placeholder="Type the product price" name="Product_quantity">
+            </div>
+            <div class="form-group">
             <button type="submit" class="btn btn-primary">Add Product</button>
+            </div>
            
         </div>
     
