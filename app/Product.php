@@ -14,7 +14,7 @@ use App\FeatureProduct;
 
 class Product extends Model
 {
-    protected $touches = array('category','features','user','featureproduct');
+   // protected $touches = array('category','features','user','featureproduct');
     protected $guarded = [];
     public function features(){
         return $this->belongsToMany(Feature::class)->withTimestamps();;
@@ -23,7 +23,7 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
     public function user(){
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(User::class);
     }
     public function orders(){
         return $this-hasMany(Order::class);
@@ -34,4 +34,5 @@ class Product extends Model
     public function featureproduct(){
         return $this->belongsTo(DB::table('feature_product'));
     }
+  
 }

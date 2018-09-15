@@ -15,7 +15,7 @@
                
             </select>
         </div>
-            <input type="hidden" name="user_id" value="{{ $user->id }}">
+            <input type="hidden" name="user_id" value="{{ $user }}">
  
         <div class="form-control">
             <a href="/products/features/{{ $product->id }}" class="btn btn-primary">Back</a>

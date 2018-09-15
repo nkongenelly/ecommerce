@@ -2,7 +2,7 @@
 
 @section('content')
     <a href="/featuress/create" class="btn btn-warning">Add Feature</a>
-    <a href="/products" class="btn btn-warning">Add Product Feature</a>
+    <a href="/products/{{ Auth::user()->id }}" class="btn btn-warning">Add Product Feature</a>
     <table class="table table-condensed table-striped table-hover table-bordered">
         <tr>
             <th>#</th>

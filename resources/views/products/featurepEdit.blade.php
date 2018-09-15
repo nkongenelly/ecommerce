@@ -10,13 +10,11 @@
             <select name="feature_id">
                 <option value="{{$features['id']}}">{{$features['feature_name']}}</option>
                 
-                    @if(array($features))
-                        @for($i=1; $i<=$featuresss; $i++){
-                             @foreach($featuress as $features){
-                                <option value="{{$features->id}}">{{$features->feature_name}}</option>
-                            @endforeach
-                        @endfor
-                    @endif
+                   
+                    @foreach($featuresall as $featureall){
+                        <option value="{{$featureall->id}}">{{$featureall->feature_name}}</option>
+                    @endforeach
+                      
             </select>
             <input type="hidden" name="user_id" value="{{ $user['id'] }}">
         </div>

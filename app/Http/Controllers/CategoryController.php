@@ -74,8 +74,12 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
+        $categories = Category::all();
         $category = Category::find($id);
-        return view('categories.editC',compact('category'));
+        $categoryname= $category->category_name;
+        $parent = $category->category_parent;
+       
+        return view('categories.editC',compact('category','categoryname','parent','categories'));
     }
 
     /**

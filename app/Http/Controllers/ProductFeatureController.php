@@ -25,11 +25,11 @@ class ProductFeatureController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create($id, $user)
     {
         $product = Product::find($id);
-        $user = auth()->user();
-        $features = Feature::all();
+        // $user = auth()->user()->id;
+        $features = Feature::where('user_id',$user)->get();
         // $features = $product->features;
         // $features = Feature::find($product);
         // dd($user);
@@ -67,7 +67,12 @@ class ProductFeatureController extends Controller
         // $products = Product::where('user_id',$user);
         // $products = Product::where('user_id',$id)->get();
         // dd($products);
-        return redirect('/products/{{ Auth::user()->id  }}');
+        $product = Product::find($id);
+        
+        $user = auth()->user();
+        $features = $product->features;
+        return view('products.featurepIndex',compact(['product','features','user']));
+        // return redirect('/products/{{ Auth::user()->id  }}');
     }
 
     /**
@@ -99,14 +104,14 @@ class ProductFeatureController extends Controller
         $featuress = $productfeature->feature_id;
         // $products = Product::where('id',$id)->get()->toArray();
         // $product = $products[0];
-    //    dd($features);
+        //    dd($features);
         $user = auth()->user();
         // $features = $product->features;
         
         $features = Feature::find($featuress);
         // dd($features->id);
         // $featuresss = Feature::where('id',$feature)->get()->toArray();
-        
+        $featuresall = Feature::all();
         $featuress = DB::table('features')->select(['id','feature_name'])->get()->toArray();
         $featuresss = count($featuress);
         // dd($featuress);
@@ -114,7 +119,7 @@ class ProductFeatureController extends Controller
         // dd(Feature::all());
         // // $productfeatures = ProductFeature::all();
         // $productfeatures = ProductFeature::where('product_id',$id)->select('product_id','feature_id');
-        return view('products.featurepEdit',compact(['productfeature','featuresss','features','featuress','user']));
+        return view('products.featurepEdit',compact(['productfeature','featuresss','features','featuress','user','featuresall']));
     }
 
     /**
@@ -139,7 +144,14 @@ class ProductFeatureController extends Controller
 
             $user = auth()->user()->id;
             $products = Product::where('user_id',$id)->get();
-            return view('products.indexP',compact('user','products'));
+            $id = request(['product_id'])['product_id'];
+            $product = Product::find($id);
+        
+            $user = auth()->user();
+            $features = $product->features;
+
+            return view('products.featurepIndex',compact(['product','features','user']));
+            // return view('products.indexP',compact('user','products'));
     }
 
     /**
@@ -148,17 +160,23 @@ class ProductFeatureController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id,$feature)
     {
-        // dd($id);
+        // $ids = DB::table('feature_product')->where('product_id',$id)->get(); dd($ids);
+        //     $id = $ids->product_id;
+            $product = Product::find($id);
+        
+            $user = auth()->user();
+            $features = $product->features;
         DB::table('feature_product')
-            ->where('id', $id)
+            ->where([
+                    'product_id'=> $id,
+                    'feature_id'=> $feature,
+                    ])
             ->delete();
 
             // dd($id);
-            $user = auth()->user()->id;
-            $products = Product::where('user_id',$user)->get();
-        // dd($products);
-        return view('products.indexP',compact('products'));
+            
+            return view('products.featurepIndex',compact(['product','features','user']));
     }
 }

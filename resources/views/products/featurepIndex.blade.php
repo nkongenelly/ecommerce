@@ -1,8 +1,8 @@
 @extends('layoutsSeller')
 
 @section('content')
-    <a href="/productfeatures/create/{{ $product->id }}" class="btn btn-warning">Add Product Feature</a>
-    <a href="/featuress/create" class="btn btn-warning" onclick="alert('okay')">Add Feature</a>
+    <a href="/productfeatures/{{ $product->id }}/{{ Auth::user()->id }}" class="btn btn-warning">Add Product Feature</a>
+    <a href="/featuress/create/{{ $product->id }}" class="btn btn-warning">Add Feature</a>
     <table class="table table-condensed table-striped table-hover table-bordered">
         <tr>
             <th>#</th>
@@ -20,7 +20,7 @@
                             <ul>{{ $feature['feature_name'] }}
                     
                                 <a href="/productfeatures/{{ $product['id'] }}" class="btn btn-warning">Edit</a>
-                                <a href="/productfeatures/delete/{{ $product['id'] }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
+                                <a href="/productfeatures/{{ $product['id'] }}/{{ $feature['id'] }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
                             </ul>
                          
                         </ol>

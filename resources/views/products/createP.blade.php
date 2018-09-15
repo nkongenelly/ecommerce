@@ -1,8 +1,8 @@
 @extends('layoutsSeller')
 
 @section('content')
-    <form action="/products" method="POST" class="form-horizontal">
-        {{ csrf_field() }}
+    <form action="/products" method="POST">
+    @csrf
         <div class="form-control">
             <div class="form-group">
                 <select name="category_id">

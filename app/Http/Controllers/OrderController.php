@@ -144,11 +144,11 @@ class OrderController extends Controller
                     $productid= $product->id;
                     $pricess = DB::table('order_items')->select('price')->where('product_id',$productid)->get();
                     // $pricess = OrderItems::where('product_id',$productid)->select('price')->get();
-                    dd($pricess);
+                    // dd($pricess);
                     foreach($pricess as $prices){
                         $price =$prices->price;
                     }
-                    dd($pricess);
+                    // dd($pricess);
                     // $abs = $products->groupBy($group);
                     // foreach($abs as $abc){
                         

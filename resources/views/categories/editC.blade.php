@@ -6,7 +6,11 @@
         {{ method_field('PATCH') }}
         <div class="form-control">
             <select name="category_parent">
-                    <option value="{{$category->id}}">{{$category->category_name}}</option>
+               
+                <option value="{{$parent}}">{{$categoryname}}</option>
+                @foreach($categories as $categorys)
+                    <option value="{{ $categorys->category_parent }}">{{ $categorys->category_name }}</option>
+                @endforeach
               
             </select>
             <div class="form-group">

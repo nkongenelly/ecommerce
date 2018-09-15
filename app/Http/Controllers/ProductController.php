@@ -22,10 +22,10 @@ class ProductController extends Controller
     // }
     public function index($id)
     {
-        $user = auth()->user($id);
+        $user = auth()->user()->find($id);
         // $products = Product::where('user_id',$user);
         $products = Product::where('user_id',$id)->get();
-
+     
         // dd($products);
         return view('products.indexP',compact('user','products'));
     }
@@ -41,7 +41,7 @@ class ProductController extends Controller
         foreach($products as $product){
             $category = $product->category_id;
             $archives = Category::find($category);
-// dd($archives);
+            // dd($archives);
             $category = Category::latest();
             if($category_name = request('category_name')){
                 
@@ -112,27 +112,40 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        
+        //dd($request->all());
+        // dd(request(['product_name','product_status','product_price','user_id','category_id','product_description','Product_quantity']));
         $this->validate(request(),[
-            'category_id' => 'required',
-            'user_id' => 'required',
             'product_name' => 'required',
             'product_status' => 'required',
             'product_price' => 'required',
+            'user_id' => 'required',
+            'category_id' => 'required',
             'product_description' => 'required',
             'Product_quantity' => 'required',
         ]);
 
+        $product = new Product();
+        $product->product_name = $request->product_name;
+        $product->product_status = $request->product_status;
+        $product->product_price = $request->product_price;
+        $product->user_id = $request->user_id;
+        $product->category_id = $request->category_id;
+        $product->product_description = $request->product_description;
+        $product->Product_quantity = $request->Product_quantity;
+
+        $product->save();
+        
+        //Product::create(request(['product_name','product_status','product_price','user_id','category_id','product_description','Product_quantity']));
+    //    dd('Hallo');
+    //    return redirect('/categories');
         $user = auth()->user()->id;
         // $products = Product::where('user_id',$user);
         $products = Product::where('user_id',$user)->get();
+     
         // dd($products);
-        
-        // dd('hello');
-        Product::create(request(['product_name','product_status','product_price','user_id','category_id','product_description','Product_quantity']));
-
-        
         return view('products.indexP',compact('user','products'));
+        
+        //return view('products.indexP',compact('user','products'));
         
 
     }
@@ -225,10 +238,12 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        Product::where('id',$id)
+        
+        $productss = Product::where('id',$id)
             ->delete();
-            $user = auth()->user($id);
-        $products = Product::where('user_id',$id)->get();
+        $user = auth()->user()->id;
+        $products = Product::where('user_id',$user)->get();
+        
         return view('products.indexP',compact('user','products'));
     }
 }

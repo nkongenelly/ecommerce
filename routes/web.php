@@ -64,7 +64,7 @@ Route::post('/products', 'ProductController@store');
 
 Route::get('/products/edit/{id}', 'ProductController@edit');
 
-Route::get('/products/features/{id}', 'ProductController@features');
+Route::get('/products/features/{id}', 'ProductController@features');//to add product Feature per product
 
 Route::patch('/products/update/{id}', 'ProductController@update');
 
@@ -87,7 +87,7 @@ Route::get('/products/delete/{id}', 'ProductController@destroy');
 //Features
 Route::get('/features/{id}', 'FeatureController@index');
 
-Route::get('/featuress/create', 'FeatureController@create');
+Route::get('/featuress/create', 'FeatureController@create');//add feature if you are in feature page
 
 Route::post('/features', 'FeatureController@store');
 
@@ -100,7 +100,7 @@ Route::get('/features/delete/{id}', 'FeatureController@destroy');
 //ProductFeatures
 Route::post('/productfeatures/{id}', 'ProductFeatureController@store');
 
-Route::get('/productfeatures/create/{id}', 'ProductFeatureController@create');
+Route::get('/productfeatures/{id}/{user}', 'ProductFeatureController@create');//to add productfeatures for a particular product
 
 Route::patch('/productfeatures/update/{id}', 'ProductFeatureController@update');
 
@@ -108,7 +108,7 @@ Route::get('/productfeatures/{id}', 'ProductFeatureController@edit');
 
 Route::patch('/productfeatures/update/{id}', 'ProductFeatureController@update');
 
-Route::get('/productfeatures/delete/{id}', 'ProductFeatureController@destroy');
+Route::get('/productfeatures/{id}/{feature}', 'ProductFeatureController@destroy');
 
 //Orders
 // Route::get('/orders/{id}', 'OrderController@index');//for vie cart table format
