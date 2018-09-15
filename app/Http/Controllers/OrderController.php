@@ -132,20 +132,34 @@ class OrderController extends Controller
         foreach($orders as $order){
             if($order->order_status_id = 2){
                 $productss = $order->product_id;
+                // $orderid = $order->id;
+                // $pricess = OrderItems::where([
+                //         'order_id'=> $orderid,
+                //         'product_id'=> $productss
+                // ])->get();
+                
                 $products = Product::where('id',$productss)->get();
                 foreach($products as $product){
                     $group = $product->product_name;
-                    $abs = $products->groupBy($group);
-                    foreach($abs as $abc){
-
+                    $productid= $product->id;
+                    $pricess = DB::table('order_items')->select('price')->where('product_id',$productid)->get();
+                    // $pricess = OrderItems::where('product_id',$productid)->select('price')->get();
+                    dd($pricess);
+                    foreach($pricess as $prices){
+                        $price =$prices->price;
                     }
-                    // dd(boolean($order->order_status_id = 2));
+                    dd($pricess);
+                    // $abs = $products->groupBy($group);
+                    // foreach($abs as $abc){
+                        
+                    // }
+                    
                 }
             }
         }
         
-        // dd($orders->order_status_id);
-        return view('orders.indexOBuyer',compact('orders','products'));
+        // dd($product->prices);
+        return view('orders.indexOBuyer',compact('orders','products','pricess'));
 
     }
 
@@ -174,6 +188,16 @@ class OrderController extends Controller
         
         // dd($orders->order_status_id);
         return view('orders.indexOBuyerComplete',compact('orders','products'));
+    }
+
+    public function orderbuyerview($id){
+        $productss = Product::where('id',$id)->get();
+        foreach($productss as $products){
+            $users = $products->user_id;
+            $user = auth()->user()->find($users)->name;
+            // dd($username);
+        }
+        return view('orders.buyerViewProduct',compact('productss','user'));
     }
 
     public function create($id)
@@ -320,11 +344,13 @@ class OrderController extends Controller
                 );
                 // dd(request(['product_id','quantity']));
                 // dd(request(['product_id'])['product_id']);
+                $product = (request(['quantity'])['quantity']) * (json_encode($pricesss)); 
+                // dd($product);
                 OrderItems::create(array(
                     'order_id'=>json_encode($abcd),
                     'product_id'=>request(['product_id'])['product_id'],
                     'quantity'=>request(['quantity'])['quantity'],
-                    'price'=>json_encode($pricesss),
+                    'price'=>json_encode($product),
                     ));
                     // dd('okay');
                     // dd($abc);

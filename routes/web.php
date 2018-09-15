@@ -70,7 +70,7 @@ Route::patch('/products/update/{id}', 'ProductController@update');
 
 Route::get('/products/delete/{id}', 'ProductController@destroy');
 //Buyer Products
-Route::get('/productsbuyer', 'ProductController@indexBuyer');
+Route::get('/productsbuyer', 'ProductController@indexBuyer');//for Buyer t view products that are in stock
 
 Route::get('/productss/create', 'ProductController@create');  
 
@@ -113,7 +113,7 @@ Route::get('/productfeatures/delete/{id}', 'ProductFeatureController@destroy');
 //Orders
 // Route::get('/orders/{id}', 'OrderController@index');//for vie cart table format
 
-Route::get('/orders/viewcart', 'OrderController@getCart');
+Route::get('/orders/viewcart', 'OrderController@getCart');//to view cart
 
 Route::get('/ordersbuyer/{id}', 'OrderController@ordersbuyer');//for pending orders ordersbuyercomplete
 
@@ -121,13 +121,15 @@ Route::get('/ordersbuyercomplete/{id}', 'OrderController@ordersbuyercomplete');/
 
 Route::get('/ordersseller', 'OrderController@ordersseller');//seller view all orders
 
-Route::get('/orderview/{id}/{order}', 'OrderController@orderview');//seller view single order
+Route::get('/orderview/{id}/{order}', 'OrderController@orderview');//seller view single order 
+
+Route::get('/orderbuyerview/{id}', 'OrderController@orderbuyerview');//buyer view single product
 
 Route::get('/orderscomplete/{id}/{order}', 'OrderController@orderscomplete');
 
 Route::get('/orders/cart/{id}/{product}', 'OrderController@cart');//for add to cart table format
 //for add to cart table format
-Route::get('/orders/cart/{id}', 'OrderController@getAddToCart');
+Route::get('/orders/cart/{id}', 'OrderController@getAddToCart');//to add to cart
 
 Route::get('/orders/create/{id}', 'OrderController@create');//for status placed
 
@@ -161,6 +163,8 @@ Route::group(['middleware'=>'App\Http\Middleware\Buyer'],function()
 
 Route::group(['middleware'=>'App\Http\Middleware\Seller'],function()
 {
+    
+    // Route::get('/categories', 'CategoryController@index');
     Route::match(['get','post'],'/sellerOnlyPage','HomeController@seller');
 });
 

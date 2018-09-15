@@ -21,12 +21,33 @@ class Buyer
     public function handle($request, Closure $next)
     {
         if($request->user() && $request->user()->usertype_id == '1'){
-            // return redirect('home')->with('error','You do not have admin access');
-            $products = Product::where('product_status','1')
-                ->get();
-            return new Response(view('products.indexpBuyer',compact('products'))->with('role','BUYER'));
+            // return redirect('home')->with('error','You do not have admin access');$products = Product::where('product_status','1')
+            $products = Product::where([
+                                ['product_status','1'],
+                                ['Product_quantity','>','0'],
+                                ])
+                                ->get();
+                foreach($products as $product){
+                    $category = Category::latest();
+                    if($category_name = request('category_name')){
+                        
+                        $category = Category::where('category_name',$category_name)->get();
+                        foreach($category as $categorys)  {
+                            $categoryid = $categorys->id;
+                            $products = Product::where('category_id',$categoryid)->get();
+                            // dd($products);  
+                        }
+                    }
+                    // $products = $products->get();
+                    $archives = Category::select('category_name')
+                        ->get();
+                        foreach($archives as $archive){
+                            
+                        }
+            return new Response(view('products.indexpBuyer',compact('products','archives'))->with('role','BUYER'));
             // return new Response(view('unauthorised access'->with('user_type','ADMIN'));
         }
         return new Response(view('unauthorized')->with('role','BUYER'));
+    }
     }
 }

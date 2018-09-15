@@ -12,9 +12,9 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // public function __constructor(){
-    //     $this->middleware('admin');
-    // }
+    public function __constructor(){
+        $this->middleware('admin');
+    }
     
 
     public function index()
@@ -33,6 +33,7 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
         return view('categories.createC',compact('categories'));
+        $this->middleware('admin');
     }
 
     /**

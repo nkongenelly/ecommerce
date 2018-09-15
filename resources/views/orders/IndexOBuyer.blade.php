@@ -10,21 +10,26 @@
             <th>Product Price</th>
         </tr>
         @if(array($orders))
-            @foreach($orders as $order)
-                @if($order->order_status_id = 2)
-                    <tr>
-                        @foreach($products as $product)
-                                                    
-                            <td>{{ $order->id }}</td>
-                            <td>{{ $product['product_name'] }}</td>
+        @foreach($orders as $order)
+        @foreach($pricess as $price)
+                    @if($order->order_status_id = 2)
+                        <tr>
+                            @foreach($products as $product)
+                                                        
+                                <td>{{ $order->id }}</td>
+                                <td>{{ $product['product_name'] }}</td>
+                                    
+                                <td>{{ $product['product_description'] }}</td>
                                 
-                            <td>{{ $product['product_description'] }}</td>
-                            <td>{{ $product['product_price'] }}</td>
+                                    <td>{{ $price->price }}</td>
+                               
+                            @endforeach
+                                
                             
-                        @endforeach
-                    </tr>
-                    
-                @endif
+                        </tr>
+                        
+                    @endif
+                    @endforeach
             @endforeach
         @endif
            

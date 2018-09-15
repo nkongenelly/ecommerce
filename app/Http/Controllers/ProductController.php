@@ -30,14 +30,63 @@ class ProductController extends Controller
         return view('products.indexP',compact('user','products'));
     }
 
-    public function indexBuyer()
+    public function indexBuyer(Request $request)
     {
-        //get products whose status is 1 (in stock)
-        $products = Product::where('product_status','1')
-                ->get();
-                // dd($products);
-            return view('products.indexpBuyer',compact('products'));
-    }
+        $products = Product::where([
+                            ['product_status','1'],
+                            ['Product_quantity','>','0'],
+                            ])
+                             ->get(); 
+                            //  dd($products);
+        foreach($products as $product){
+            $category = $product->category_id;
+            $archives = Category::find($category);
+// dd($archives);
+            $category = Category::latest();
+            if($category_name = request('category_name')){
+                
+                $category = Category::where('category_name',$category_name)->get();
+                foreach($archives as $categorys)  {
+                    $categoryid = $categorys->id;
+                    $products = Product::where('category_id',$categoryid)->get();
+            // $category = Category::latest();
+            // if($category_name = request('category_name')){
+                
+            //     $category = Category::where('category_name',$category_name)->get();
+            //     foreach($category as $categorys)  {
+            //         $categoryid = $categorys->id;
+            //         $products = Product::where('category_id',$categoryid)->get();
+                    // dd($products);  
+                }
+       
+            }
+            return view('products.indexpBuyer',compact('products','archives'));
+        }
+    } 
+            // $products = $products->get();
+            // dd($category);
+            // $archivesss = Category::select('category_name')
+            //     ->get();
+            
+            //     foreach($archivesss as $archive){
+            //         $productsmatch = Product::where('category_id',$archive)->get();
+            //         foreach($productsmatch as $matched){
+            //             if(($matched->Product_quantity)>0){
+            //                 $archivess = Category::select('category_name');
+            //                 // dd($archivess);
+            //             }
+            //         }
+            //     }
+            //     // $archives = Category::select('category_name')
+            //     // ->get();
+
+            // //get products whose status is 1 (in stock)
+        
+                    
+        
+     
+         
+    
 
     /**
      * Show the form for creating a new resource.
@@ -108,10 +157,10 @@ class ProductController extends Controller
         // $feature = Feature::where()
         // $features = Feature::all();
         $features = $product->features;
-    //    foreach($product->features as $role){
+        //    foreach($product->features as $role){
         
-    //     echo $role->feature_name;
-    //    }
+        //     echo $role->feature_name;
+        //    }
        
         // $featureproduct = DB::table('feature_product')->where('product_id',$id)->get();
         // $featureproduct = FeatureProduct::where('product_id',$id)->select();
