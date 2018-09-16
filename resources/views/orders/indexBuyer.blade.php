@@ -10,7 +10,6 @@
             <th>No. of Orders</th>
             <th>Product Price @</th>
             <th colspan="1">Action</th>
-            <th>Placed Order</th>
             
                 @foreach($products as $item)
                     <tr>

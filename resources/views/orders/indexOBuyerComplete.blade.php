@@ -11,20 +11,20 @@
         </tr>
         @if(array($orders))
             @foreach($orders as $order)
-                @if($order->order_status_id = 2)
+               
                     <tr>
-                        @foreach($products as $product)
+                       
                                                     
                             <td>{{ $order->id }}</td>
-                            <td>{{ $product['product_name'] }}</td>
+                            <td>{{ $order['product_name'] }}</td>
                                 
-                            <td>{{ $product['product_description'] }}</td>
-                            <td>{{ $product['product_price'] }}</td>
+                            <td>{{ $order['product_description'] }}</td>
+                            <td>{{ $order['price'] }}</td>
                             
-                        @endforeach
+                      
                     </tr>
                     
-                @endif
+               
             @endforeach
         @endif
            

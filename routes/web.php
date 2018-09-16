@@ -131,9 +131,9 @@ Route::get('/orders/cart/{id}/{product}', 'OrderController@cart');//for add to c
 //for add to cart table format
 Route::get('/orders/cart/{id}', 'OrderController@getAddToCart');//to add to cart
 
-Route::get('/orders/create/{id}', 'OrderController@create');//for status placed
+Route::get('/orders/create/{id}', 'OrderController@create');//for status placed to specify quantities before placing order to seller
 
-Route::post('/orders', 'OrderController@store');
+Route::post('/orders', 'OrderController@store');//to place order to seller
 
 Route::get('/orders/edit/{id}', 'OrderController@edit');
 

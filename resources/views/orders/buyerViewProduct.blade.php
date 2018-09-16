@@ -1,4 +1,4 @@
-@extends('layoutsSeller')
+@extends('layoutsBuyer')
 
 @section('content')
     <div class="row">
@@ -15,7 +15,7 @@
                     <td>{{ $product->product_name }}</td>
                     <td>{{ $user }}</td>
                     <td>
-                    <a href="/orders/create/{{ $product->id }}" class="btn btn-outline-success my-2 my-sm-0">Place Orders</a>
+                    <a href="/orders/cart/{{ $product->id }}" class="btn btn-outline-success my-2 my-sm-0">Add to Cart</a>
                     </td>
                 </tr>
         @endforeach

@@ -29,40 +29,79 @@ class ProductController extends Controller
         // dd($products);
         return view('products.indexP',compact('user','products'));
     }
-
+public $archives;
+public $countproducts;
+// public $archives;
+// public $archives;
     public function indexBuyer(Request $request)
-    {
+    { 
         $products = Product::where([
                             ['product_status','1'],
                             ['Product_quantity','>','0'],
                             ])
                              ->get(); 
                             //  dd($products);
+        if($category_id = request('category_name')){
+            $productss = Category::find($category_id);
+        $products = $productss->products;
+        // dd($products);
+        }
         foreach($products as $product){
             $category = $product->category_id;
-            $archives = Category::find($category);
-            // dd($archives);
-            $category = Category::latest();
-            if($category_name = request('category_name')){
+            // $countproducts = Product::where('category_id',$category)->count();
+            // $archives = Category::find($category);
+            $archives = Category::all();
+        }
+        return view('products.indexpBuyer',compact('products','archives','productss'));
+        
+    } 
+            // dd($category);
+            // foreach($archives as $archive){
+            //     // dd($countproducts);
+            //     $products = Product::where([
+            //         ['product_status','1'],
+            //         ['Product_quantity','>','0'],
+            //         ])
+            //          ->get(); 
+            //         //  dd($products);
                 
-                $category = Category::where('category_name',$category_name)->get();
-                foreach($archives as $categorys)  {
-                    $categoryid = $categorys->id;
-                    $products = Product::where('category_id',$categoryid)->get();
+            //     if($category_name = request('category_name')){
+
+            //     $category = Category::where('category_name',$category_name)->get();
+
+            //         $categoryid = $archive->id;
+            //         $products = $archive->products;
+            //         // dd($products);
+            //         $products = $products;
+            //     }
+           // }
+        
+            
+                
+            
+            //  dd($archive->products->count());
+            // $products = Product::latest();
+            // if($category_name = request('category_name')){
+            //     $products =$category_name->products;
+            //     // $products = $products->get();
+            // }
+            // }
             // $category = Category::latest();
             // if($category_name = request('category_name')){
                 
             //     $category = Category::where('category_name',$category_name)->get();
-            //     foreach($category as $categorys)  {
+            //     foreach($archives as $categorys)  {
             //         $categoryid = $categorys->id;
-            //         $products = Product::where('category_id',$categoryid)->get();
-                    // dd($products);  
-                }
-       
-            }
-            return view('products.indexpBuyer',compact('products','archives'));
-        }
-    } 
+            //         $products = $categorys->products;
+            //         // dd($products);
+            //         $products = $products;
+            //     }
+               
+            //  }
+            
+    //         return view('products.indexpBuyer',compact('products','archives','productss'));
+        
+    // } 
             // $products = $products->get();
             // dd($category);
             // $archivesss = Category::select('category_name')

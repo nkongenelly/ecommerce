@@ -15,9 +15,8 @@
                 <th colspan="2">Action</th>
             </tr>
             
-            @if(array($products))
-                
-                
+    @if(array($products))
+    
                     @foreach($products as $product)
                         <tr>
                             <td>{{ $product->id }}</td>
@@ -40,9 +39,8 @@
                                 <a href="/orders/cart/{{ $product->id }}" class="btn btn-outline-success my-2 my-sm-0">Add to Cart</a>
                             </td>
                         </tr>
-                    @endforeach
-                    
-            @endif       
+                    @endforeach 
+        @endif       
         
         
         </table>

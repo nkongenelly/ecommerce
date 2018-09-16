@@ -57,23 +57,33 @@ class OrderController extends Controller
     public function ordersseller(){
         //Get Ordered products whose status are 2 for each user
         $user = auth()->user()->id;
-        $orders = Order::where('order_status_id',2)->get();
+        // $orders = Order::where('order_status_id',2)->get();
         // $products =0;
-        $count =0;
-        foreach($orders as $order){
-            if($order->order_status_id = 2){
-                $buyers = $order->user_id;
-                $buyer = auth()->user()->find($buyers)->name;
-                $productss = $order->product_id;
-                $products = Product::where([
-                    'id'=>$productss,
-                    'user_id'=>$user,
-                    ])->get();
-                foreach($products as $product){
+        $orders = Order::join('products', 'products.id', '=', 'orders.product_id')
+                    ->join('users','users.id', '=', 'orders.user_id')
+                    ->where('products.user_id',$user)
+                    ->join('order_items','order_items.order_id', '=', 'orders.id')
+                    // ->join('order_items','order_items.product_id', '=', 'products.id')
+                    ->where('orders.order_status_id',2)
+                    ->select('products.product_name', 'products.product_description','orders.id','order_items.price','users.name')
                     
-                }
-            }
-        }
+                    ->get();
+                    // $buyer = auth()->user()->find($orders['user_id'])->name;dd($buyer);
+        // $count =0;
+        // foreach($orders as $order){
+        //     if($order->order_status_id = 2){
+        //         $buyers = $order->user_id;
+        //         $buyer = auth()->user()->find($buyers)->name;
+        //         $productss = $order->product_id;
+        //         $products = Product::where([
+        //             'id'=>$productss,
+        //             'user_id'=>$user,
+        //             ])->get();
+        //         foreach($products as $product){
+                    
+        //         }
+        //     }
+        // }
         // dd($order->order_status_id);
         return view('orders.indexSeller',compact('orders','products','buyer'));
 
@@ -104,15 +114,15 @@ class OrderController extends Controller
             // $userid = auth()->user($single)->id;  
             
         }
-        $quantities = OrderItems::where('order_id',$order)->select(['quantity'])->get();
+        $quantities = OrderItems::where('order_id',$order)->select(['quantity','price'])->get();
         foreach($quantities as $quantitys){
             $quantity = $quantitys->quantity;
+            $price =  $quantitys->price;
             
         }
         $productss = Product::where('id',$id)->select(['product_name','product_price'])->get();
         foreach($productss as $products){
             $product = $products->product_name;
-            $price =  $products->product_price;
             $created = $products->created_at;
             // dd($created);
         }
@@ -122,69 +132,101 @@ class OrderController extends Controller
     }
 
     public function ordersbuyer($id){
-        $orders = DB::table('orders')->where([
-            'user_id'=>$id,
-            'order_status_id' =>2,
-            ])->get();
-        // $orders = Order::where('user_id',$id)->select('order_status_id')->get();
-        // $products =0;
-        $count =0;
-        foreach($orders as $order){
-            if($order->order_status_id = 2){
-                $productss = $order->product_id;
-                // $orderid = $order->id;
-                // $pricess = OrderItems::where([
-                //         'order_id'=> $orderid,
-                //         'product_id'=> $productss
-                // ])->get();
-                
-                $products = Product::where('id',$productss)->get();
-                foreach($products as $product){
-                    $group = $product->product_name;
-                    $productid= $product->id;
-                    $pricess = DB::table('order_items')->select('price')->where('product_id',$productid)->get();
-                    // $pricess = OrderItems::where('product_id',$productid)->select('price')->get();
-                    // dd($pricess);
-                    foreach($pricess as $prices){
-                        $price =$prices->price;
-                    }
-                    // dd($pricess);
-                    // $abs = $products->groupBy($group);
-                    // foreach($abs as $abc){
-                        
-                    // }
-                    
-                }
-            }
+        //get orders whose order_status is placed
+        // $orders = DB::table('orders')->where([
+        //     'user_id'=>$id,
+        //     'order_status_id' =>2,
+        //     ])->get();
+            //foreach order, show the product name and description and total price.
+            $orders = Order::join('products', 'products.id', '=', 'orders.product_id')
+            ->select('orders.id')
+            ->join('order_items','order_items.order_id', '=', 'orders.id')
+            // ->join('order_items','order_items.product_id', '=', 'products.id')
+            ->where(['orders.user_id'=>$id,'orders.order_status_id'=>2])
+            ->select('products.product_name', 'products.product_description','orders.id','order_items.price')
+            ->get();
+                     return view('orders.indexOBuyer',compact('orders','products','pricess'));
         }
-        
+            // dd($orders);
+        // foreach($orders as $order){
+        //     // $products = array();
+        //         $productss = $order->product_id;
+        //         // $orderid = $order->id;
+        //         // $pricess = OrderItems::where([
+        //         //         'order_id'=> $orderid,
+        //         //         'product_id'=> $productss
+        //         // ])->get();
+             
+        //         $products = Product::where('id',$productss)->get();
+        //             foreach($products as $product){
+        //                 $productsss = $product->product_name;
+        //                 // dd($product);
+        //                 // array_push($products,$product);
+        //             // }
+        //         // dd($order->product_id);
+        //         // dd($products->product_name);
+        //         // dd($products->product_name);
+        //         // $products = Product::where('id',$productss)->get();
+        //         // foreach($products as $product){
+        //         //     $group = $product->product_name;
+        //         //     $productid= $product->id;
+        //             $pricess = DB::table('order_items')->select('price')->where([
+        //                 'product_id'=>$productss,
+        //                 'order_id'=>$id,
+        //                 ])->get();
+        //                 // dd($pricess);
+        //             // $pricess = OrderItems::where('product_id',$productid)->select('price')->get();
+        //             // dd($pricess);
+                    
+        //             foreach($pricess as $prices){
+        //                 $price =$prices->price;
+        //             }
+        //         //     // dd($pricess);
+        //         //     // $abs = $products->groupBy($group);
+        //         //     // foreach($abs as $abc){
+                        
+        //             }
+        //         // array_push($products,$product);
+                    
+        //         // }
+        //         return view('orders.indexOBuyer',compact('orders','products','pricess'));
+        // }
+        // dd($products);
         // dd($product->prices);
-        return view('orders.indexOBuyer',compact('orders','products','pricess'));
+       
 
-    }
+    // }
 
     public function ordersbuyercomplete($id){
-        $orders = DB::table('orders')->where([
-            'user_id'=>$id,
-            'order_status_id' =>3,
-            ])->get();
+        // $orders = DB::table('orders')->where([
+        //     'user_id'=>$id,
+        //     'order_status_id' =>3,
+        //     ])->get();
         // $orders = Order::where('user_id',$id)->select('order_status_id')->get();
         // $products =0;
-        $count =0;
-        foreach($orders as $order){
-            if($order->order_status_id = 3){
-                $productss = $order->product_id;
-                $products = Product::where('id',$productss)->get();
-                foreach($products as $product){
-                    $group = $product->product_name;
-                    $abs = $products->groupBy($group);
-                    foreach($abs as $abc){
+        $orders = Order::join('products', 'products.id', '=', 'orders.product_id')
+        ->select('orders.id')
+        ->join('order_items','order_items.order_id', '=', 'orders.id')
+        // ->join('order_items','order_items.product_id', '=', 'products.id')
+        ->where(['orders.user_id'=>$id,'orders.order_status_id'=>3])
+        ->select('products.product_name', 'products.product_description','orders.id','order_items.price')
+        ->get();
 
-                    }
-                    // dd(boolean($order->order_status_id = 2));
-                }
-            }
-        }
+        // $count =0;
+        // foreach($orders as $order){
+        //     if($order->order_status_id = 3){
+        //         $productss = $order->product_id;
+        //         $products = Product::where('id',$productss)->get();
+        //         foreach($products as $product){
+        //             $group = $product->product_name;
+        //             $abs = $products->groupBy($group);
+        //             foreach($abs as $abc){
+
+        //             }
+        //             // dd(boolean($order->order_status_id = 2));
+        //         }
+        //     }
+        // }
         
         // dd($orders->order_status_id);
         return view('orders.indexOBuyerComplete',compact('orders','products'));
@@ -207,6 +249,7 @@ class OrderController extends Controller
         // dd($id);
         $status = 1;
         $orderstatus = OrderStatus::find($status);
+  
         // dd($product);
         return view('orders.createBuyer',compact('product','orderstatus','id'));
     }
@@ -371,6 +414,17 @@ class OrderController extends Controller
                     foreach($orders as $order){
                         $orderss = $order->product_id;
                         $productss = Product::where('id',$orderss)->get();
+                    }
+
+                   //check whether quantity is below aero so as to update status to be out of stock
+                    $quantitycheck = Product::find(request(['product_id'])['product_id']);
+                    $quantity = $quantitycheck->Product_quantity;
+                    if(($quantity['quantity'])<"0")
+                    {                    
+                        $update = Product::find(request(['product_id'])['product_id'])
+                                ->update([
+                                    "product_status" => "2"
+                                ]);
                     }
 
                     //  return view('orders.indexBuyer',compact('orders','productss','products'));
