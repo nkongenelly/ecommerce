@@ -40,30 +40,47 @@ class ProductImageController extends Controller
     {
         // dd($request->product_id);
         $this->validate($request, [
-            'image_name' => 'required',
-            'image_name.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'product_image' => 'required',
+            // 'product_image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
-        if($request->hasfile('image_name'))
-         {
+        $productimg = new ProductImages;
+        if(Input::hasFile('product_image')){
+            $file=Input::file('product_image');
+            $file->move(public_path(). '/images/', $file->getClientOriginalName());
+            $productimg->image_name = $file->getClientOriginalName();
+        }
+        $productimg->product_id=$request->product_id;
+        $productimg->save();
+        // if($request->hasfile('product_image'))
+        //  {
 
-            foreach($request->file('image_name') as $image)
-            {
-                $name=$image->getClientOriginalName();
-                $image->move(public_path().'/images/', $name);  
-                $data[] = $name;  
-            }
-         }
-
-         $form= new ProductImages();
-         $form->image_name=json_encode($data);
-         $form->pathname=$request->product_id;
+        //     foreach($request->file('product_image') as $image)
+        //     {
+        //         $name=$image->getClientOriginalName();
+        //         $image->move(public_path().'/images/', $name);  
+        //         $data[] = $name;  
+        //     }
+        //  }
          
-        
-        $form->save();
-        $product = Product::find($request->product_id);
-        return view('images.createImage',compact('product'))->with('success', 'Your images has been successfully');
 
-  
+        //  $form= new ProductImages();
+        // //  $form->image_name=$data;
+        //  $form->image_name=json_encode($data);
+        //  $form->product_id=$request->product_id;
+         
+        // // dd(json_encode($data));
+        // $form->save();
+        $product = Product::find($request->product_id);
+        
+        $productsimage = Product::where('id',$request->product_id)
+                                ->update(['product_image'=>$file->getClientOriginalName()]);
+        $user = auth()->user()->id;
+        // $products = Product::where('user_id',$user);
+        $products = Product::where('user_id',$user)->get();
+        
+        // dd($products);
+        // return view('products.indexP',compact('user','products'));
+        return view('products.indexP',compact('products','user'))->with('success', 'Your images has been successfully');
     
     }
     

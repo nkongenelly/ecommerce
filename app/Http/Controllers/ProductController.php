@@ -30,10 +30,10 @@ class ProductController extends Controller
         // dd($products);
         return view('products.indexP',compact('user','products'));
     }
-public $archives;
-public $countproducts;
-// public $archives;
-// public $archives;
+        public $archives;
+        public $countproducts;
+        // public $archives;
+        // public $archives;
     public function indexBuyer(Request $request)
     { 
         $products = Product::where([

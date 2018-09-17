@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-sm-10">
+    <div class="col-sm-11">
         <table class="table table-condensed table-striped table-hover table-bordered">
             <tr>
                 <th>#</th>
@@ -39,7 +39,7 @@
                                 <a href="/orders/cart/{{ $product->id }}" class="btn btn-outline-success my-2 my-sm-0">Add to Cart</a>
                             </td>
                             <td>
-                                <a href="/orders/cart/{{ $product->id }}" class="btn btn-outline-success my-2 my-sm-0">Review</a>
+                                <a href="/reviewsbuyer/{{ $product->id }}" class="btn btn-outline-success my-2 my-sm-0">Review</a>
                             </td>
                         </tr>
                     @endforeach 
@@ -48,7 +48,7 @@
         
         </table>
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-1">
      @include('sidebar')
     </div>
 </div>

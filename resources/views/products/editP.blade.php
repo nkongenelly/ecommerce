@@ -20,7 +20,7 @@
             </div>
             <div class="form-group">
                 <select name="product_status">
-                    <option value="{{ $product['product_status'] }}">{{ $product['product_name'] }}</option>
+                    <option value="{{ $product['product_status'] }}">{{ $product['product_status'] }}</option>
                     <option value="1">In Stock</option>
                     <option value="2">Out of Stock</option>
                 

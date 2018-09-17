@@ -22,13 +22,19 @@
                     <a href="/reviewsbuyer/{{ $product->id }}" class="btn btn-outline-success my-2 my-sm-0">Add Review</a>
                     </td>
                 </tr>
-        @endforeach
+      
             
             
             
             </table>
         </div>
+        <div class="col sm 5">
+        
+                <img src="/images/{{ $product->product_image }}" 
+            style="width:150px; height:150px;"> 
+              
+       </div>
     </div>
-
+    @endforeach
 @endsection
 

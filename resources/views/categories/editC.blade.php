@@ -9,7 +9,7 @@
                
                 <option value="{{$parent}}">{{$categoryname}}</option>
                 @foreach($categories as $categorys)
-                    <option value="{{ $categorys->category_parent }}">{{ $categorys->category_name }}</option>
+                    <option value="{{ $categorys->id }}">{{ $categorys->category_name }}</option>
                 @endforeach
               
             </select>

@@ -11,10 +11,10 @@
             <input type="hidden" name="product_id" value="{{ $product->id }}">
             <div class="form-group">
                 <label>Product name</label>
-                <input type="text" class="form-control" placeholder="Type the product name" name="product_name">
+                <input type="text" class="form-control" value="{{ $product->product_name }}"name="product_name">
             </div>
             <div class="input-group control-group increment" >
-            <input type="file" name="image_name[]" class="form-control" accept="image/*"
+            <input type="file" name="product_image" class="form-control" accept="image/*"
 >
             <div class="input-group-btn"> 
                 <button class="btn btn-success" type="button"><i class="glyphicon glyphicon-plus"></i>Add</button>
@@ -22,7 +22,7 @@
             </div>
             <div class="clone hide">
             <div class="control-group input-group" style="margin-top:10px">
-                <input type="file" name="image_name[]" class="form-control">
+                <input type="file" name="product_image[]" class="form-control">
                 <div class="input-group-btn"> 
                 <button class="btn btn-danger" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
                 </div>

@@ -239,8 +239,14 @@ class OrderController extends Controller
         foreach($productss as $products){
             $users = $products->user_id;
             $user = auth()->user()->find($users)->name;
-            // dd($username);
+          
+            $arrays = array($products->product_image); 
+              if(array($arrays)){
+            foreach($arrays as $product){
+                // dd($product);
         }
+        }
+            }
         return view('orders.buyerViewProduct',compact('productss','user'));
     }
 

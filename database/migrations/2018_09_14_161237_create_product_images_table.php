@@ -17,7 +17,7 @@ class CreateProductImagesTable extends Migration
             $table->increments('id');
             $table->binary('image')->nullable();
             $table->string('image_name')->nullable();
-            $table->string('pathname')->nullable();
+            $table->string('product_id')->nullable();
             $table->timestamps();
         });
     }

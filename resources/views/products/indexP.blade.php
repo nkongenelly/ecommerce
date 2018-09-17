@@ -40,7 +40,7 @@
                     <a href="/products/edit/{{ $product['id'] }}" class="btn btn-warning">Edit</a>
                 </td>
                 <td>
-                    <a href="/productimage/{{ $product['id'] }}" class="btn btn-danger">Add Image</a>
+                    <a href="/productimage/{{ $product['id'] }}" class="btn btn-success">Add Image</a>
                 </td>
                 <td>
                     <a href="/products/delete/{{ $product['id'] }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
