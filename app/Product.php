@@ -10,7 +10,7 @@ use App\Feature;
 use App\Order;
 use App\OrderItems;
 use App\FeatureProduct;
-
+use App\Review;
 
 class Product extends Model
 {
@@ -26,13 +26,16 @@ class Product extends Model
         return $this->belongsTo(User::class);
     }
     public function orders(){
-        return $this-hasMany(Order::class);
+        return $this->hasMany(Order::class);
     }
     public function orderitems(){
-        return $this-hasMany(OrderItems::class);
+        return $this->hasMany(OrderItems::class);
     }
     public function featureproduct(){
         return $this->belongsTo(DB::table('feature_product'));
+    }
+    public function reviews(){
+        return $this->hasMany(Review::class);
     }
   
 }

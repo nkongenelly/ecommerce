@@ -445,6 +445,51 @@ class OrderController extends Controller
     {
         //
     }
+    public function reports($id)
+    {
+        $reports = Product::where('user_id',$id)
+                        ->join('order_items','order_items.product_id', '=', 'products.id')
+                        ->join('categories','categories.id', '=', 'products.category_id')
+                        // ->select('category.name','products.product_name')
+                        ->select('categories.category_name','products.product_name','order_items.quantity','order_items.price','products.id','order_items.order_id')
+                        ->get();
+                        $total =0;
+                        foreach($reports as $report){
+                            for($i=1; $i<$reports->count(); $i++){
+                                $total +=$report->price;
+                            }
+                        }
+                            // dd($total);
+                        
+
+        return view('reports.indexReports',compact('reports','total'));
+    }
+
+    public function productreports($id,$order){
+        $productss = Product::find($id);
+        $products=$productss->product_name;
+        $productsid =$productss->id;
+        $buyers =Order::where('product_id',$productsid)->get();
+        foreach($buyers as $buyer){
+            $buyerid = $buyer->user_id;
+            $buyername = auth()->user()->find($buyerid)->name;
+        }
+        $quantitys =OrderItems::where([
+            'product_id'=>$productss->id,
+            'order_id'=>$order,
+            ])->get();
+        foreach($quantitys as $quantityss){
+            $quantity= $quantityss->quantity;
+            $price = $quantityss->price;
+        }
+                                // join('order_items', 'order_items.product_id', '=', 'products.id')
+                                // ->join('orders','orders.id', '=', 'order_items.order_id')
+                                // ->join('users','users.id', '=', 'orders.user_id')
+                                // ->select('products.product_name','users.name','order_items.quantity','order_items.price')
+                                // ->get();
+        //    dd($productreport);
+        return view('reports.productReport',compact('products','buyername','quantity','price'));
+    }
 
     /**
      * Show the form for editing the specified resource.

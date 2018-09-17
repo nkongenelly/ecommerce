@@ -104,11 +104,11 @@ Route::get('/productfeatures/{id}/{user}', 'ProductFeatureController@create');//
 
 Route::patch('/productfeatures/update/{id}', 'ProductFeatureController@update');
 
-Route::get('/productfeatures/{id}', 'ProductFeatureController@edit');
+Route::get('/productfeaturesedit/{id}/{feature}', 'ProductFeatureController@edit');
 
 Route::patch('/productfeatures/update/{id}', 'ProductFeatureController@update');
 
-Route::get('/productfeatures/{id}/{feature}', 'ProductFeatureController@destroy');
+Route::get('/productfeaturesdelete/{id}/{feature}', 'ProductFeatureController@destroy');
 
 //Orders
 // Route::get('/orders/{id}', 'OrderController@index');//for vie cart table format
@@ -143,7 +143,21 @@ Route::get('/orders/delete/{id}', 'OrderController@destroy');
 
 Route::post('/orderitems/{results}', 'OrderController@orderitems');
 
+//reports
+Route::get('/reports/{id}', 'OrderController@reports');
 
+Route::get('/reportsview/{id}/{order}', 'OrderController@productreports');
+
+//reviews
+Route::get('/reviewsbuyer', 'ProductController@reviewsbuyerindex');
+
+Route::get('/reviewsseller/{id}', 'ProductController@reviewsseller');
+
+Route::get('/reviewsbuyer/{id}', 'ProductController@reviewsbuyer');
+
+Route::post('/reviewsbuyerstore', 'ProductController@reviewsbuyerstore');
+
+Route::get('/reviewsbuyerdestroy/{review}/{user}', 'ProductController@reviewsbuyerdestroy');
 
 //Auth and middlewre
 

@@ -8,6 +8,7 @@
                 <tr>
                     <th>Product Name</th>
                     <th>Seller Name</th>
+                    <th colspan="2">Action</th>
                 </tr>
                 
         @foreach($productss as $product)
@@ -16,6 +17,9 @@
                     <td>{{ $user }}</td>
                     <td>
                     <a href="/orders/cart/{{ $product->id }}" class="btn btn-outline-success my-2 my-sm-0">Add to Cart</a>
+                    </td>
+                    <td>
+                    <a href="/reviewsbuyer/{{ $product->id }}" class="btn btn-outline-success my-2 my-sm-0">Add Review</a>
                     </td>
                 </tr>
         @endforeach

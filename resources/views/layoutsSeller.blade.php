@@ -36,7 +36,10 @@
             <a class="nav-link" href="/ordersseller">Orders</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/reviews">Reviews</a>
+            <a class="nav-link" href="/reviewsseller/{{ Auth::user()->id }}">Reviews</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/reports/{{ Auth::user()->id  }}">Reports</a>
         </li>
         <li class="nav-item dropdown">
             <div class="dropdown">

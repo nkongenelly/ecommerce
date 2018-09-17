@@ -8,6 +8,7 @@ use App\Category;
 use App\Product;
 use App\User;
 use App\Feature;
+use App\Review;
 use App\FeatureProduct;
 
 class ProductController extends Controller
@@ -120,9 +121,48 @@ public $countproducts;
             //     // ->get();
 
             // //get products whose status is 1 (in stock)
-        
+    public function reviewsbuyerindex(){
+        $reviews = Review::all();
+        return view('products.reviewIndexBuyer',compact('reviews'));
+    }
                     
-        
+    public function reviewsbuyer($id){
+       $product =Product::find($id); 
+        return view('products.reviewsbuyer',compact('product'));
+    }
+
+    public function reviewsbuyerdestroy($review,$user){
+
+        $destroy =Review::where([
+            'user_id'=>$user,
+            'id'=>$review
+            ])
+            ->delete();
+
+        $reviews = Review::all();
+         return view('products.reviewIndexBuyer',compact('reviews'));
+     }
+
+    public function reviewsseller($id){
+        $products = Product::where('user_id',$id)->get();
+        foreach($products as $product){
+            $reviews = $product->reviews;
+        }
+
+        return view('products.reviewIndexSeller',compact('reviews'));
+     }
+
+    public function reviewsbuyerstore(Request $request){
+        // dd(request(['review','product_id','user_id']));
+        $this->validate(request(),[
+            'review'=>'required',
+            'product_id'=>'required',
+            'user_id'=>'required'
+        ]);
+        Review::create(request(['review','product_id','user_id']));
+        $reviews = Review::all();
+        return view('products.reviewIndexBuyer',compact('reviews'));
+    }
      
          
     
@@ -175,8 +215,8 @@ public $countproducts;
         $product->save();
         
         //Product::create(request(['product_name','product_status','product_price','user_id','category_id','product_description','Product_quantity']));
-    //    dd('Hallo');
-    //    return redirect('/categories');
+         //    dd('Hallo');
+        //    return redirect('/categories');
         $user = auth()->user()->id;
         // $products = Product::where('user_id',$user);
         $products = Product::where('user_id',$user)->get();
@@ -197,7 +237,8 @@ public $countproducts;
      */
     public function features(Request $request,$id)
     {
-        $product = Product::find($id);
+
+        $product = Product::where('user_id',auth()->user()->id)->find($id);
         // dd($product);
         $user = auth()->user();
         //get the feature_products table related to the clicked product to display their related text
