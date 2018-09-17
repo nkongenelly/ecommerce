@@ -12,7 +12,7 @@
                 <th>Product description</th>
                 <th>Product Price</th>
                 <th>Created On</th>
-                <th colspan="2">Action</th>
+                <th colspan="3">Action</th>
             </tr>
             
     @if(array($products))
@@ -37,6 +37,9 @@
                             </td>
                             <td>
                                 <a href="/orders/cart/{{ $product->id }}" class="btn btn-outline-success my-2 my-sm-0">Add to Cart</a>
+                            </td>
+                            <td>
+                                <a href="/orders/cart/{{ $product->id }}" class="btn btn-outline-success my-2 my-sm-0">Review</a>
                             </td>
                         </tr>
                     @endforeach 

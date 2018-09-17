@@ -65,9 +65,10 @@ class OrderController extends Controller
                     ->join('order_items','order_items.order_id', '=', 'orders.id')
                     // ->join('order_items','order_items.product_id', '=', 'products.id')
                     ->where('orders.order_status_id',2)
-                    ->select('products.product_name', 'products.product_description','orders.id','order_items.price','users.name')
+                    ->select('products.product_name', 'products.product_description','orders.id','order_items.price','users.name','orders.product_id')
                     
                     ->get();
+                    
                     // $buyer = auth()->user()->find($orders['user_id'])->name;dd($buyer);
         // $count =0;
         // foreach($orders as $order){
@@ -103,6 +104,7 @@ class OrderController extends Controller
     }
 
     public function orderview( $id, $order){
+        // dd($id);
         $orderss = Order::where('id',$order)->select(['user_id'])->get();
         foreach($orderss as $orders){
             $userid = $orders->user_id;
@@ -118,13 +120,13 @@ class OrderController extends Controller
         foreach($quantities as $quantitys){
             $quantity = $quantitys->quantity;
             $price =  $quantitys->price;
-            
+            // dd($quantity);
         }
         $productss = Product::where('id',$id)->select(['product_name','product_price'])->get();
         foreach($productss as $products){
             $product = $products->product_name;
             $created = $products->created_at;
-            // dd($created);
+            // dd($product);
         }
        
         return view('orders.orderSingleSeller',compact('user','quantity','product','price','order','userid'));

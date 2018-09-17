@@ -145,11 +145,13 @@ public $countproducts;
 
     public function reviewsseller($id){
         $products = Product::where('user_id',$id)->get();
-        foreach($products as $product){
-            $reviews = $product->reviews;
+        if(count($products)){
+            foreach($products as $product){
+                $reviews = $product->reviews;
+            }
         }
 
-        return view('products.reviewIndexSeller',compact('reviews'));
+        return view('products.reviewIndexSeller',compact('reviews','products'));
      }
 
     public function reviewsbuyerstore(Request $request){

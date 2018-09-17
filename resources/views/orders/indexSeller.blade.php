@@ -21,7 +21,7 @@
                             <td>{{ $order['product_description'] }}</td>
                             <td>{{ $order['price'] }}</td>
                             <td>
-                            <a href="/orderview/{{ $order['id'] }}/{{ $order->id }}" class="btn btn-warning">View</a>    
+                            <a href="/orderview/{{ $order['product_id'] }}/{{ $order->id }}" class="btn btn-warning">View</a>    
                             </td>
                             <td>
                                 <a href="/orderview/{{ $order['id'] }}/{{ $order->id }}" class="btn btn-outline-success my-2 my-sm-0">Complete Orders</a>

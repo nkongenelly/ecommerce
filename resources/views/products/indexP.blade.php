@@ -12,7 +12,7 @@
             <th>Product description</th>
             <th>Product Quantity</th>
             <th>Created On</th>
-            <th colspan="3">Action</th>
+            <th colspan="4">Action</th>
         </tr>
         
         @if(count($products))
@@ -38,6 +38,9 @@
                 </td>
                 <td>
                     <a href="/products/edit/{{ $product['id'] }}" class="btn btn-warning">Edit</a>
+                </td>
+                <td>
+                    <a href="/productimage/{{ $product['id'] }}" class="btn btn-danger">Add Image</a>
                 </td>
                 <td>
                     <a href="/products/delete/{{ $product['id'] }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>

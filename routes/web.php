@@ -159,7 +159,12 @@ Route::post('/reviewsbuyerstore', 'ProductController@reviewsbuyerstore');
 
 Route::get('/reviewsbuyerdestroy/{review}/{user}', 'ProductController@reviewsbuyerdestroy');
 
+//product Images
+Route::get('/productimage/{id}', 'ProductImageController@create');
+
+Route::post('/productimages', 'ProductImageController@store');
 //Auth and middlewre
+
 
 Auth::routes();
 

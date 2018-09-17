@@ -10,6 +10,7 @@
         </tr>
         
         @if(count($reviews))
+            @foreach($products as $product)
             @foreach($reviews as $review)
             <tr>
                 <td>{{ $review->id }}</td>
@@ -17,6 +18,7 @@
                 <td>{{ Auth::user()->find($review->user_id)->name }}</td>
                 <td>{{ $review->review }}</td>
             </tr>
+            @endforeach
             @endforeach
         @endif       
        
