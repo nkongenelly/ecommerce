@@ -28,6 +28,7 @@ class Buyer
                         ])
                         ->get(); 
                         //  dd($products);
+                        if(array($products)){
                         if($category_id = request('category_name')){
                         $productss = Category::find($category_id);
                         $products = $productss->products;
@@ -37,8 +38,10 @@ class Buyer
                         $category = $product->category_id;
                         // $countproducts = Product::where('category_id',$category)->count();
                         // $archives = Category::find($category);
-                        $archives = Category::all();
                         }
+                    }
+                        $archives = Category::all();
+                        // }
                     return new Response(view('products.indexpBuyer',compact('products','archives','productss'))->with('role','BUYER'));
                 }
             

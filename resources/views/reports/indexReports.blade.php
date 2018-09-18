@@ -1,6 +1,7 @@
 @extends('layoutsSeller')
 
 @section('content')
+<a href="/bar-chart" class="btn btn-warning">Totals Line Graph</a>
     <table class="table table-condensed table-striped table-hover table-bordered">
         <tr>
             

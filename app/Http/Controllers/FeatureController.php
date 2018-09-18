@@ -118,8 +118,8 @@ class FeatureController extends Controller
     {
         Feature::where('id',$id)
             ->delete();  $user = auth()->user($id);
-            $user = auth()->user($id);
-            $features = Feature::where('user_id',$id)->get();
+            $user = auth()->user()->id;
+            $features = Feature::where('user_id',$user)->get();
     
             return view('features.indexF',compact('features'));
     }

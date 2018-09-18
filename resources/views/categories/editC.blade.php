@@ -6,8 +6,12 @@
         {{ method_field('PATCH') }}
         <div class="form-control">
             <select name="category_parent">
-               
+               @if($parent !=0)
                 <option value="{{$parent}}">{{$categoryname}}</option>
+                @else
+                <option value="{{$parent}}"><option>
+
+                @endif
                 @foreach($categories as $categorys)
                     <option value="{{ $categorys->id }}">{{ $categorys->category_name }}</option>
                 @endforeach

@@ -42,6 +42,7 @@ class ProductController extends Controller
                             ])
                              ->get(); 
                             //  dd($products);
+          if(array($products)){
         if($category_id = request('category_name')){
             $productss = Category::find($category_id);
         $products = $productss->products;
@@ -51,8 +52,10 @@ class ProductController extends Controller
             $category = $product->category_id;
             // $countproducts = Product::where('category_id',$category)->count();
             // $archives = Category::find($category);
-            $archives = Category::all();
         }
+    }
+            $archives = Category::all();
+        // }
         return view('products.indexpBuyer',compact('products','archives','productss'));
         
     } 
@@ -280,9 +283,13 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $product = Product::find($id);
+        $categorys = $product->category_id;
+        if($categorys !=0){
+        $categoryss = Category::find($id);
+        }
         // dd($product->product_name);
         $user = auth()->user();
-        return view('products.editP',compact('product','categories','user'));
+        return view('products.editP',compact('product','categories','user','categoryss','categorys'));
     }
 
     /**

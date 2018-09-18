@@ -6,8 +6,11 @@
         {{ method_field('PATCH') }}
         <div class="form-control">
             <select name="category_id">
-                
-               
+                @if($categorys !=0)
+            <option value="{{$product->category->id}}">{{$product->category->category_name}}</option>
+            @else
+            <option value="0"></option>
+               @endif
                     @foreach($categories as $category)
                         <option value="{{$category->id}}">{{$category->category_name}}</option>
                     @endforeach

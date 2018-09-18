@@ -20,7 +20,7 @@
                             <ul>{{ $feature['feature_name'] }}
                     
                                 <a href="/productfeaturesedit/{{ $product['id'] }}/{{ $feature['id'] }}" class="btn btn-warning">Edit</a>
-                                <a href="/productfeaturesdelete/{{ $product['id'] }}/{{ $feature['id'] }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
+                                <a href="/productfeaturesdelete/{{ $product['id'] }}/{{ $feature['id'] }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product feature?')">Delete</a>
                             </ul>
                          
                         </ol>

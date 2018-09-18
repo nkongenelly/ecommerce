@@ -12,6 +12,11 @@
     <script src="main.js"></script>
     <script src="/js/custom.js"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/fusioncharts.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/fusioncharts.charts.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/fusioncharts.theme.fint.js') }}"></script>
+
+
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">

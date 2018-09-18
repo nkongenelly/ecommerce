@@ -3,7 +3,7 @@
 @section('content')
     <table class="table table-condensed table-striped table-hover table-bordered">
         <tr>
-            <th>Category</th>
+            <th>Review</th>
             <th>Product Name</th>
             <th>From</th>
             <th>Review</th>
@@ -11,14 +11,16 @@
         
         @if(count($reviews))
             @foreach($products as $product)
-            @foreach($reviews as $review)
             <tr>
+            @foreach($reviews as $review)
+            
                 <td>{{ $review->id }}</td>
-                <td>{{ $review->product->product_name }}</td>
+                <td>{{ $product->product_name }}</td>
                 <td>{{ Auth::user()->find($review->user_id)->name }}</td>
                 <td>{{ $review->review }}</td>
+                   @endforeach         
             </tr>
-            @endforeach
+
             @endforeach
         @endif       
        

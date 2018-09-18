@@ -3,7 +3,7 @@
 @section('content')
     <table class="table table-condensed table-striped table-hover table-bordered">
         <tr>
-            <th>Category</th>
+            <th>#</th>
             <th>Product Name</th>
             <th>From</th>
             <th>Seller</th>

@@ -463,7 +463,7 @@ class OrderController extends Controller
                         ->get();
                         $total =0;
                         foreach($reports as $report){
-                            for($i=1; $i<$reports->count(); $i++){
+                            for($i=1; $i<=$reports->count(); $i++){
                                 $total +=$report->price;
                             }
                         }

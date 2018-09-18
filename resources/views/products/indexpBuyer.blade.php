@@ -32,15 +32,28 @@
                             <td>{{ $product->product_description }}</td>
                             <td>{{ $product->product_price }}</td>
                             <td>{{ $product->created_at->diffForHumans() }}</td>
+                            @if($product->product_status == "2")
                             <td>
-                                <a href="/orderbuyerview/{{ $product->id }}" class="btn btn-outline-success my-2 my-sm-0">View</a>
+                                <a href="#" class="btn btn-success disabled" title="Out of Stock">View</a>
                             </td>
                             <td>
-                                <a href="/orders/cart/{{ $product->id }}" class="btn btn-outline-success my-2 my-sm-0">Add to Cart</a>
+                                <a href="#" class="btn btn-success disabled" title="Out of Stock">Add to Cart</a>
                             </td>
                             <td>
-                                <a href="/reviewsbuyer/{{ $product->id }}" class="btn btn-outline-success my-2 my-sm-0">Review</a>
+                            <a href="/reviewsbuyer/{{ $product->id }}" class="btn btn-outline-success my-2 my-sm-0" >Review</a>
                             </td>
+                            @else
+                            <td>
+                                <a href="/orderbuyerview/{{ $product->id }}" class="btn btn-outline-success my-2 my-sm-0" >View</a>
+                            </td>
+                            <td>
+                                <a href="/orders/cart/{{ $product->id }}" class="btn btn-outline-success my-2 my-sm-0" >Add to Cart</a>
+                            </td>
+                            <td>
+                                <a href="/reviewsbuyer/{{ $product->id }}" class="btn btn-outline-success my-2 my-sm-0" >Review</a>
+                            </td>
+
+                            @endif
                         </tr>
                     @endforeach 
         @endif       

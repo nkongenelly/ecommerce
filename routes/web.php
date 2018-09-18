@@ -163,6 +163,11 @@ Route::get('/reviewsbuyerdestroy/{review}/{user}', 'ProductController@reviewsbuy
 Route::get('/productimage/{id}', 'ProductImageController@create');
 
 Route::post('/productimages', 'ProductImageController@store');
+
+//Charts
+Route::get('/bar-chart', 'FusionCharts@index');
+
+Route::get('products/chart', 'FusionCharts@show');
 //Auth and middlewre
 
 
