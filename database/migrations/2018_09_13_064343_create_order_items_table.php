@@ -19,6 +19,7 @@ class CreateOrderItemsTable extends Migration
             $table->integer('product_id');
             $table->integer('quantity');
             $table->double('price');
+            $table->tinyInteger('completed')->nullable;
             $table->timestamps();
         });
       

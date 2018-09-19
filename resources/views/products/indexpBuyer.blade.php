@@ -28,7 +28,10 @@
                                         <li>{{ $feature->feature_name}}</li>
                                     </ol>
                                 @endforeach
-                            </td>             
+                            </td>     
+                            @if(array($cart))
+                                <input type="hidden" value="{{ $orderid }}" name ="order_id">
+                            @endif     
                             <td>{{ $product->product_description }}</td>
                             <td>{{ $product->product_price }}</td>
                             <td>{{ $product->created_at->diffForHumans() }}</td>
@@ -46,9 +49,10 @@
                             <td>
                                 <a href="/orderbuyerview/{{ $product->id }}" class="btn btn-outline-success my-2 my-sm-0" >View</a>
                             </td>
-                            <td>
+                             <td>
                                 <a href="/orders/cart/{{ $product->id }}" class="btn btn-outline-success my-2 my-sm-0" >Add to Cart</a>
                             </td>
+                           
                             <td>
                                 <a href="/reviewsbuyer/{{ $product->id }}" class="btn btn-outline-success my-2 my-sm-0" >Review</a>
                             </td>

@@ -7,6 +7,9 @@ use Auth;
 use App\User;
 use App\Product;
 use App\Category;
+use Session;
+use App\Cart;
+use App\Order;
 use Illuminate\Http\Response;
 
 class Buyer
@@ -41,8 +44,26 @@ class Buyer
                         }
                     }
                         $archives = Category::all();
-                        // }
-                    return new Response(view('products.indexpBuyer',compact('products','archives','productss'))->with('role','BUYER'));
+                        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+                        $cart = new Cart($oldCart);
+                        $request->session()->put('cart', $cart);
+                        // dd($cart);
+                        $orderid =0;
+                        if($cart->items !=null){
+                            foreach($cart->items as $item){
+                                $orderid1 = $item['order_id'];
+                            }
+                            $orderid = $orderid1;
+                            return new Response(view('products.indexpBuyer',compact('products','archives','productss','cart','orderid'))->with('role','BUYER'));
+                        }else{
+                            $allorders= Order::latest();
+                            foreach($allorders as $oneorder){
+                                $orderid = $oneorder->id;
+                            }
+                            // $orderid = $orderid2;
+                            return new Response(view('products.indexpBuyer',compact('products','archives','productss','cart','orderid'))->with('role','BUYER'));
+                        }
+                    // return new Response(view('products.indexpBuyer',compact('products','archives','productss','cart','orderid'))->with('role','BUYER'));
                 }
             
             // return new Response(view('unauthorised access'->with('user_type','ADMIN'));

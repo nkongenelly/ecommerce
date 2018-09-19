@@ -6,7 +6,7 @@
         <tr>
             <th>Order No.</th>
             <th>Product Name</th>
-            <th>Product description</th>
+            <th>Product quantity</th>
             <th>Product Price</th>
         </tr>
         @if(array($orders))
@@ -18,7 +18,7 @@
                             <td>{{ $order->id }}</td>
                             <td>{{ $order['product_name'] }}</td>
                                 
-                            <td>{{ $order['product_description'] }}</td>
+                            <td>{{ $order['quantity'] }}</td>
                             <td>{{ $order['price'] }}</td>
                             
                       

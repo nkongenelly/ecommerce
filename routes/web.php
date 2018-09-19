@@ -119,13 +119,15 @@ Route::get('/ordersbuyer/{id}', 'OrderController@ordersbuyer');//for pending ord
 
 Route::get('/ordersbuyercomplete/{id}', 'OrderController@ordersbuyercomplete');//for completed orders
 
-Route::get('/ordersseller', 'OrderController@ordersseller');//seller view all orders
+Route::get('/ordersseller', 'OrderController@ordersseller');//seller view all orders 
 
 Route::get('/orderview/{id}/{order}', 'OrderController@orderview');//seller view single order 
 
+Route::get('/orderviewsingle/{id}', 'OrderController@orderssellersingle');
+
 Route::get('/orderbuyerview/{id}', 'OrderController@orderbuyerview');//buyer view single product
 
-Route::get('/orderscomplete/{id}/{order}', 'OrderController@orderscomplete');
+Route::get('/orderscomplete/{id}/{order}/{product}', 'OrderController@orderscomplete');
 
 Route::get('/orders/cart/{id}/{product}', 'OrderController@cart');//for add to cart table format
 //for add to cart table format

@@ -7,9 +7,13 @@ use Illuminate\Support\Facades\DB;
 use App\Category;
 use App\Product;
 use App\User;
+use App\Order;
 use App\Feature;
 use App\Review;
 use App\FeatureProduct;
+use App\Cart;
+use Session;
+use Illuminate\Http\Response;
 
 class ProductController extends Controller
 {
@@ -53,12 +57,31 @@ class ProductController extends Controller
             // $countproducts = Product::where('category_id',$category)->count();
             // $archives = Category::find($category);
         }
-    }
+        }
             $archives = Category::all();
+            $oldCart = Session::has('cart') ? Session::get('cart') : null;
+            $cart = new Cart($oldCart);
+            $request->session()->put('cart', $cart);
+            // dd($cart);
+            $orderid =0;
+            if($cart->items !=null){
+                foreach($cart->items as $item){
+                    $orderid1 = $item['order_id'];
+                }
+                $orderid = $orderid1;
+                return new Response(view('products.indexpBuyer',compact('products','archives','productss','cart','orderid'))->with('role','BUYER'));
+            }else{
+                $allorders= Order::latest();
+                foreach($allorders as $oneorder){
+                    $orderid = $oneorder->id;
+                }
+                // $orderid = $orderid2;
+                return new Response(view('products.indexpBuyer',compact('products','archives','productss','cart','orderid'))->with('role','BUYER'));
+            }
         // }
-        return view('products.indexpBuyer',compact('products','archives','productss'));
+        // return view('products.indexpBuyer',compact('products','archives','productss'));
         
-    } 
+        } 
             // dd($category);
             // foreach($archives as $archive){
             //     // dd($countproducts);
