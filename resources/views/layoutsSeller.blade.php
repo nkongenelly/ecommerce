@@ -15,7 +15,11 @@
     <script type="text/javascript" src="{{ asset('js/fusioncharts.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/fusioncharts.charts.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/fusioncharts.theme.fint.js') }}"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    {!! Charts::assets() !!}
 
 </head>
 <body>

@@ -8,7 +8,9 @@ use App\User;
 use App\Category;
 use App\Product;
 use Illuminate\Http\Response;
-
+// use Illuminate\Support\Facades\DB;
+use ConsoleTVs\Charts\Charts;
+// 
 class Seller
 {
     /**

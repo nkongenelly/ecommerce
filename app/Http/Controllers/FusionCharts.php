@@ -2,29 +2,100 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+// use Illuminate\Support\Facades\DB;
 use ConsoleTVs\Charts\Facades\Charts;
+// use ConsoleTVs\Charts\Charts;
 // use FusionCharts;
 use App\User;
 use App\Product;
 use App\OrderItems;
+use App\Order;
 // use DB;
 
 class FusionCharts extends Controller
 {
     public function index()
     {
+        
+// $chart = app()->chartjs
+// ->name('lineChartTest')
+// ->type('line')
+// ->size(['width' => 400, 'height' => 200])
+// ->labels(['January', 'February', 'March', 'April', 'May', 'June', 'July'])
+// ->datasets([
+//     [
+//         "label" => "My First dataset",
+//         'backgroundColor' => "rgba(38, 185, 154, 0.31)",
+//         'borderColor' => "rgba(38, 185, 154, 0.7)",
+//         "pointBorderColor" => "rgba(38, 185, 154, 0.7)",
+//         "pointBackgroundColor" => "rgba(38, 185, 154, 0.7)",
+//         "pointHoverBackgroundColor" => "#fff",
+//         "pointHoverBorderColor" => "rgba(220,220,220,1)",
+//         'data' => [65, 59, 80, 81, 56, 55, 40],
+//     ],
+//     [
+//         "label" => "My Second dataset",
+//         'backgroundColor' => "rgba(38, 185, 154, 0.31)",
+//         'borderColor' => "rgba(38, 185, 154, 0.7)",
+//         "pointBorderColor" => "rgba(38, 185, 154, 0.7)",
+//         "pointBackgroundColor" => "rgba(38, 185, 154, 0.7)",
+//         "pointHoverBackgroundColor" => "#fff",
+//         "pointHoverBorderColor" => "rgba(220,220,220,1)",
+//         'data' => [12, 33, 44, 44, 55, 23, 40],
+//     ]
+// ])
+// ->options([]);
+
+
         // $id =auth()->user()->id;
     	// $users = Product::where(DB::raw("(DATE_FORMAT(created_at,'%Y'))"),date('Y'))->where('user_id',$id)
-    	// 			->get();
-        // $chart = Charts::database($users, 'bar', 'highcharts')
-		// 	      ->title("Total Product sales")
-		// 	      ->elementLabel("Total Users")
-		// 	      ->dimensions(1000, 500)
-		// 	      ->responsive(false)
-        // 	      ->groupByMonth(date('Y'), true);
-     
-       
+        // 			->get();
+        $user = auth()->user()->id;
+        // $selectfields = Product::where([
+        //     'user_id'=>$user,
+        // ])->get();
+        // foreach($selectfields as $field){
+            $groups = OrderItems::join('products','products.id','=', 'order_items.product_id')
+                                    ->where(['products.user_id'=>$user])
+                                    ->join('orders','orders.id','=','order_items.order_id')
+                                    ->where('orders.order_status_id',"3")
+                                    // ->selectRaw('year(orders.created_at) as year, monthname (orders.created_at) as month, count(*) as count')
+                                    // ->groupBy('year', 'month')
+                                    // ->orderByRaw('min(orders.created_at) desc')
+                                    ->select('products.product_name','order_items.price')
+                                    ->get();
+            // foreach($groups as $group){
+                                    // dd($groups);
+                $names = array();
+                $prices = array();
+                for($i=1; $i<=count($groups);$i++){
+                    $name =$groups[$i-1]->product_name;
+                    array_push($names,$name);
+                    $price =$groups[$i-1]->price;
+                    array_push($prices,$price);
+                }          
+                // dd($names);
+            // }
+                    $chart = Charts::database($groups,'bar', 'highcharts')
+                        ->title("Total Product sales")
+                        ->labels($names)
+                        ->values($prices)
+                        ->elementLabel("Total Sales")
+                        ->dimensions(1000, 500)
+                        ->responsive(true);
+                        // ->groupByDay('09');
+                // $chart = Charts::create('line', 'highcharts')
+                //           ->title("Total Product sales")
+                //           ->labels(["First","Second","Third"])
+                //           ->values(["50",'200',"100"])
+                // 	      ->elementLabel("Total Users")
+                // 	      ->dimensions(1000, 500)
+                // 	      ->responsive(true);
+                                    // }
+                    return view('fusioncharts.index',compact('chart'));
+            // }
+        }
+    // }
         // dd($barChart);
     
 // include("app/includes/fussioncharts.php");
@@ -101,9 +172,9 @@ class FusionCharts extends Controller
 //         }]
 //     }');
 //  $barCharts = $barChart->paginate(10);
-        return view('fusioncharts/index',compact('barCharts'));
-    }
-
+    //     return view('fusioncharts.index',compact('chart'));
+    // }
+    // }
 
     /**
      * Show the form for creating a new resource.
