@@ -51,27 +51,32 @@ class ProductFeatureController extends Controller
         $this->validate(request(),[
             'product_id' => 'required',
             'feature_id' => 'required',
+            'name' => 'required',
         ]);
-        // $features= Feature::find(request('feature__id'));
-        // $products= Product::find(request('product__id'));
-            // dd('features');
-        // $features->products()->attach($products);
-        DB::table('feature_product')->insert(request(['product_id','feature_id']));
-        
-        // FeatureProduct::create(request(['product_id','feature_id']));
-        // $product = Product::find($id);
-        // // dd($product);
-        // $user = auth()->user();
-        // $features = $product->features();
-        // $user = auth()->user($id);
-        // $products = Product::where('user_id',$user);
-        // $products = Product::where('user_id',$id)->get();
-        // dd($products);
+        DB::table('feature_product')->insert(request(['product_id','feature_id','name','feature_price']));
+
         $product = Product::find($id);
         
         $user = auth()->user();
-        $features = $product->features;
-        return view('products.featurepIndex',compact(['product','features','user']));
+   
+            $pfeatures = DB::table('feature_product')->where('product_id',$product->id)->get();
+
+            foreach($pfeatures as $pfeature){
+                // dd($pfeature->feature_price);
+                $featureid = $pfeature->feature_id;
+                $select = DB::table('feature_product')->where(['product_id'=>$product->id,
+                                                            'feature_id'=>$featureid])->get();
+                // dd($pfeature);
+                $featurename = $featureid['feature_name'];
+                // dd($featurename->feature);
+                // $belongs = $featurename->feature;
+                foreach($select as $selectone){
+                $findfeature = Feature::find($selectone->feature_id);
+                $featurenames = $findfeature['feature_name'];
+                }
+
+            }
+        return view('products.featurepIndex',compact(['product','features','user','pfeatures','featurename','select','featurenames']));
         // return redirect('/products/{{ Auth::user()->id  }}');
     }
 
@@ -94,41 +99,20 @@ class ProductFeatureController extends Controller
      */
     public function edit($id,$feature)
     {
-        $productfeatures = DB::table('feature_product')->where([
-                                    'product_id'=>$id,
-                                    'feature_id'=>$feature,
-
-                                    ])->get()->toArray();;
-
-        // $productfeatures =FeatureProduct::where('id',$id)->get()->toArray();
-        // dd($productfeatures[0]->id);
-        foreach($productfeatures as $productfeature){   
-            $featuressy = $productfeature->feature_id;
-            $features = Feature::find($featuressy);
-            $productid=$productfeature->product_id;
-            $product = Product::find($productid);
-            // dd($featuress);
-        }
-     
-        // $products = Product::where('id',$id)->get()->toArray();
-        // $product = $products[0];
-        //    dd($features);
+        $productfeatures = DB::table('feature_product')->find($feature);
+        $featureid = $productfeatures->feature_id;
+        $pfeatureid = $productfeatures->id;
+        $features = Feature::find($featureid);
+        // dd($pfeatureid);
+        $featurename = $features->feature_name;
+        $productfeature = $features->id;
         $user = auth()->user()->id;
-        // $features = $product->features;
-        
-        $features = Feature::find($featuressy);
-        // dd($features->id);
-        // $featuresss = Feature::where('id',$feature)->get()->toArray();
         $featuresall = Feature::where('user_id',$user)->get();
-        $featuress = DB::table('features')->select(['id','feature_name'])->get()->toArray();
-        $featuresss = count($featuress);
-        // dd($featuress);
-        
-        // dd(Feature::all());
-        // // $productfeatures = ProductFeature::all();
-        // $productfeatures = ProductFeature::where('product_id',$id)->select('product_id','feature_id');
-        return view('products.featurepEdit',compact(['productfeature','featuresss','features','featuress','user','featuresall','featuressy','product']));
+        $pfeaturename = $productfeatures->name;
+        $pfeatureprice = $productfeatures->feature_price;
+        return view('products.featurepEdit',compact(['featureid','featurename','productfeature','featuresall','pfeaturename','id','user','pfeaturename','pfeatureid','pfeatureprice']));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -143,13 +127,13 @@ class ProductFeatureController extends Controller
         $this->validate(request(),[
             'product_id' => 'required',
             'feature_id' => 'required',
+            'name' => 'required',
         ]);
-
-        DB::table('feature_product')
+// dd(request(['name']));
+        $updated = DB::table('feature_product')
             ->where('id', $id)
-            ->update(request(['product_id','feature_id']));
-
-
+            ->update(request(['product_id','feature_id','name','feature_price']));
+// dd($id);
             $user = auth()->user()->id;
             $products = Product::where([
                             'user_id'=>$user,
@@ -157,12 +141,34 @@ class ProductFeatureController extends Controller
             ]                   )->get();
             $ids = request(['product_id'])['product_id'];
             $product = Product::find($ids);
-        
+        // dd($product->id);
             $user = auth()->user();
             // dd($product);
             $features = $product->features;
+            $pfeatures = DB::table('feature_product')->where('product_id',$product->id)->get();
+            // dd($pfeatures);
+            // foreach($pfeatures as $onepfeature){
+            //     $featureid = $onepfeature->feature_id;
+            //     $findfeature = Feature::find($onepfeature->feature_id);
+            //     $featurename = $findfeature['feature_name'];
+            // }
+            foreach($pfeatures as $pfeature){
+                // dd($pfeature->feature_price);
+                $featureid = $pfeature->feature_id;
+                $select = DB::table('feature_product')->where(['product_id'=>$product->id,
+                                                            'feature_id'=>$featureid])->get();
+                // dd($pfeature);
+                $featurename = $featureid['feature_name'];
+                // dd($featurename->feature);
+                // $belongs = $featurename->feature;
+                foreach($select as $selectone){
+                $findfeature = Feature::find($selectone->feature_id);
+                $featurenames = $findfeature['feature_name'];
+                }
 
-            return view('products.featurepIndex',compact(['product','features','user']));
+            }
+
+            return view('products.featurepIndex',compact(['product','features','user','pfeatures','featurename','select','featurenames']));
             // return view('products.indexP',compact('user','products'));
     }
 
@@ -180,15 +186,32 @@ class ProductFeatureController extends Controller
         DB::table('feature_product')
             ->where([
                     'product_id'=> $id,
-                    'feature_id'=> $feature,
+                    'id'=> $feature,
                     ])
             ->delete();
             $product = Product::find($id);
         
             $user = auth()->user();
             $features = $product->features;
+            $pfeatures = DB::table('feature_product')->where('product_id',$product->id)->get();
+            // dd($pfeatures);
+            foreach($pfeatures as $pfeature){
+                // dd($pfeature->feature_price);
+                $featureid = $pfeature->feature_id;
+                $select = DB::table('feature_product')->where(['product_id'=>$product->id,
+                                                            'feature_id'=>$featureid])->get();
+                // dd($pfeature);
+                $featurename = $featureid['feature_name'];
+                // dd($featurename->feature);
+                // $belongs = $featurename->feature;
+                foreach($select as $selectone){
+                $findfeature = Feature::find($selectone->feature_id);
+                $featurenames = $findfeature['feature_name'];
+                }
+
+            }
             // dd($id);
             
-            return view('products.featurepIndex',compact(['product','features','user']));
+            return view('products.featurepIndex',compact(['product','features','user','pfeatures','featurename','featurenames','select']));
     }
 }

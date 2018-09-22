@@ -1,9 +1,11 @@
 <?php
 namespace App;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use App\Product;
 use App\User;
 use App\Order;
+use App\FeatureProduct;
 
 class Cart extends Model
 {
@@ -23,7 +25,7 @@ class Cart extends Model
     }
     public function add($item, $id) {
         // dd($item);
-        $storedItem = ['quantity' => 0, 'price' => $item->price, 'item' => $item, 'product_id' => $id, 'product_name' => $item->price, 'product_description' => $item->price, 'product_price' => $item->price, 'order_id' => $item->order_id];
+        $storedItem = ['quantity' => 0, 'price' => $item->price, 'item' => $item, 'product_id' => $id, 'product_name' => $item->price, 'product_description' => $item->price, 'product_price' => $item->price, 'order_id' => $item->order_id, 'name' => $item->price, 'feature_price' => $item->order_id];
         if ($this->items) {
             if (array_key_exists($id, $this->items)) {
                 $storedItem = $this->items[$id];
@@ -38,6 +40,18 @@ class Cart extends Model
         $storedItem['product_name'] = Product::find($id)->product_name;
         $storedItem['product_description'] = $item->product_description;
         $storedItem['product_price'] = $item->product_price;
+        // $storedItem['name'] = [];
+        // $storedItem['feature_price'] = [];
+        $featurename = DB::table('feature_product')->where('product_id',$id)->get();
+        foreach($featurename as $featurenameone){
+            $storedItem['name'] = $featurenameone->name;
+            if($featurenameone->feature_price != null){
+                $storedItem['feature_price'] = $featurenameone->feature_price;
+            }else{
+            $storedItem['feature_price'] = null;
+            }
+        }
+        
         $allorders=Order::latest()->get();
         // dd($allorders->first());
         if($allorders->first()!= null){

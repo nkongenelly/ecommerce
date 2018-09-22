@@ -17,6 +17,8 @@ class CreateProductFeaturesTable extends Migration
             $table->increments('id');
             $table->integer('product_id');
             $table->integer('feature_id');
+            $table->string('name');
+            $table->double('feature_price')->nullable();
             $table->timestamps();
         });
     }

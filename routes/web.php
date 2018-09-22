@@ -131,7 +131,7 @@ Route::get('/orderscomplete/{id}/{order}/{product}', 'OrderController@orderscomp
 
 Route::get('/orders/cart/{id}/{product}', 'OrderController@cart');//for add to cart table format
 //for add to cart table format
-Route::get('/orders/cart/{id}', 'OrderController@getAddToCart');//to add to cart
+Route::post('/orders/cart/{id}', 'OrderController@getAddToCart');//to add to cart
 
 Route::get('/orders/create/{id}', 'OrderController@create');//for status placed to specify quantities before placing order to seller
 

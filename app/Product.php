@@ -31,9 +31,19 @@ class Product extends Model
     public function orderitems(){
         return $this->hasMany(OrderItems::class);
     }
-    public function featureproduct(){
-        return $this->belongsTo(DB::table('feature_product'));
-    }
+    // public function featureproduct(){
+    //     return $this->hasManyThrough(
+    //         DB::table("feature_product"),
+    //         Feature::class,
+    //         'App\Post',
+    //         'App\User',
+    //         'country_id', // Foreign key on users table...
+    //         'user_id', // Foreign key on posts table...
+    //         'id', // Local key on countries table...
+    //         'id' // Local key on users table...
+    //     );
+        // return $this->belongsTo(DB::table('feature_product'));
+    // }
     public function reviews(){
         return $this->hasMany(Review::class);
     }

@@ -9,6 +9,8 @@ use App\Product;
 use App\OrderStatus;
 use App\OrderItems;
 use App\Cart;
+use App\Feature;
+use App\FeatureProduct;
 use App\Category;
 use Session;
 class OrderController extends Controller
@@ -43,7 +45,7 @@ class OrderController extends Controller
            } 
         // dd($products->product_name);
        }
-    //    dd($productss);
+        //    dd($productss);
         return view('orders.indexBuyer',compact('orders','productss','products'));
         //}
         
@@ -105,7 +107,7 @@ class OrderController extends Controller
         $statuss = 3;
         //check if all products in the order have been completed
         $checkifall = Order::where('id',$order)->get();
-// dd($checkifall);
+        // dd($checkifall);
         foreach($checkifall as $confirmall){
             $confirmcount = OrderItems::where('order_id',$confirmall->id)->get();
             $checkcompleted = OrderItems::where(['order_id'=>$confirmall->id,'product_id'=>$product])->get();
@@ -125,6 +127,7 @@ class OrderController extends Controller
                     // array_push($count, "true","true");
                     //  dd($confirmall);
                 }
+                
                 $confirmcount = OrderItems::where([
                                             'order_id'=>$confirmall->id,
                                             'completed'=>1,
@@ -247,12 +250,7 @@ class OrderController extends Controller
     }
 
     public function ordersbuyer($id){
-        //get orders whose order_status is placed
-        // $orders = DB::table('orders')->where([
-        //     'user_id'=>$id,
-        //     'order_status_id' =>2,
-        //     ])->get();
-            //foreach order, show the product name and description and total price.
+       
             $orders = OrderItems::join('products', 'products.id', '=', 'order_items.product_id')
             // ->select('orders.id')
             ->join('orders','order_items.order_id', '=', 'orders.id')
@@ -263,7 +261,7 @@ class OrderController extends Controller
             // dd($orders);
             $oldCart = Session::has('cart') ? Session::get('cart') : null;
              $cart = new Cart($oldCart);
-                     return view('orders.indexOBuyer',compact('orders','products','pricess','cart'));
+                     return view('orders.indexOBuyer',compact('orders','products','pricess','cart','products','relatedfeatures'));
         }
             // dd($orders);
         // foreach($orders as $order){
@@ -352,6 +350,36 @@ class OrderController extends Controller
     }
 
     public function orderbuyerview($id){
+        $productsthis = Product::where([
+            ['product_status','1'],
+            ['Product_quantity','>','0'],
+            ['id',$id],
+            ])
+            ->get(); 
+        foreach($productsthis as $product){
+            $relatedfeatures = $product->features;
+            // dd($product->features);
+            // }
+            $pfeatures = DB::table('feature_product')->where('product_id',$product->id)->get();
+            // $pfeatures = FeatureProduct::where('product_id',$product->id)->get();
+            // dd($products);
+            foreach($pfeatures as $onepfeature){
+                $featureid = $onepfeature->feature_id;
+                // dd($onepfeature->feature_id);
+                $findfeature = Feature::find($onepfeature->feature_id);
+                $featurename = $findfeature['feature_name'];
+            }
+            foreach($relatedfeatures as $relatedfeature){
+                $onefeature = $relatedfeature->id;
+                $pfeaturethiss = DB::table('feature_product')->where('feature_id',$onefeature)->get();
+                foreach($pfeaturethiss as $pfeaturethis)
+                {
+                    $relatedfeatureone = $pfeaturethis->name;
+                // dd($pfeaturethis->name);
+
+                }
+            }
+        }
         $productss = Product::where('id',$id)->get();
         foreach($productss as $products){
             $users = $products->user_id;
@@ -364,7 +392,7 @@ class OrderController extends Controller
         }
         }
             }
-        return view('orders.buyerViewProduct',compact('productss','user'));
+        return view('orders.buyerViewProduct',compact('productss','user','productsthis','product','relatedfeatureone','pfeaturethis'));
     }
 
     public function create($id)
@@ -391,8 +419,13 @@ class OrderController extends Controller
         // dd('orderstatusd');
         return redirect('/productsbuyer');
     }
+    public function pricetocart(Request $request,$id){
+
+        return $this.getAddToCart($id);
+    }
 
     public function getAddToCart(Request $request, $id) {
+        // dd(request('name'));
         $product = Product::find($id);
         $oldCart = Session::has('cart') ? Session::get('cart') : null;
         $cart = new Cart($oldCart);
@@ -402,6 +435,16 @@ class OrderController extends Controller
         $carts = $cart->items;
         // dd($cart->items);
         foreach($cart->items as $item){
+        if(request('name') !=null){
+            $item['name'] = request('name');
+            $fname  = request('name');
+            $fprices = DB::table('feature_product')->where(['product_id'=>$id,'name'=>request('name')])->get();
+            foreach($fprices as $fprice){
+                $featureprice = $fprice->feature_price;
+            
+
+            }
+        }
             $status = 1;
             $getallorders=Order::latest()->get(); 
             if(count($getallorders)){
@@ -440,11 +483,12 @@ class OrderController extends Controller
             ])->select('id')->get();
             }
             
-        
+       
             $orderpresents = Order::all();
             
             }
         // }
+        // dd($featureprice);
         if(array($cart)){ 
             $products = Product::where([
                 ['product_status','1'],
@@ -477,7 +521,7 @@ class OrderController extends Controller
                     //         }
                     //     }
                     // }
-         return view('products.indexpBuyer',compact('products','archives','productss','orderid','cart'));
+         return view('products.indexpBuyer',compact('products','archives','productss','orderid','cart','featureprice'));
         // return redirect('/productsbuyer',compact('orderid'));
         }
         else{
@@ -494,6 +538,17 @@ class OrderController extends Controller
         $cart = new Cart($oldCart);
       $carts = $cart->items;
       foreach($cart->items as $item){
+            if($item['name'] !=null){
+                // $item['name'] = request('name');
+                // dd($item);
+                $fname  = request('name');
+                $fprices = DB::table('feature_product')->where(['product_id'=>$item['product_id'],'name'=>$item['name']])->get();
+                foreach($fprices as $fprice){
+                    $featureprice = $fprice->feature_price;
+                
+    
+                }
+            }
           $productss = $item['item']->id;
           $userid = auth()->user()->id;
         $orders = Order::where('user_id',$userid)->get();
@@ -507,7 +562,7 @@ class OrderController extends Controller
         $users = auth()->user()['id'];
         
       }
-      return view('orders.indexBuyer',['products' => $cart->items, 'totalPrice' => $cart->totalPrice],compact('orders'));
+      return view('orders.indexBuyer',['products' => $cart->items, 'totalPrice' => $cart->totalPrice],compact('orders','featureprice'));
         // return view('orders.indexBuyer', compact('order','products'));
     }
 
@@ -627,7 +682,11 @@ class OrderController extends Controller
                 // dd($orderitems);
                 $prices = $item['product_name'];
                 $pricess = Product::find($item['product_name']);
-                $pricesss = $item['product_price'] * $item['quantity'];
+                if($item['feature_price'] != null){
+                $pricesss = $item['feature_price'] * $item['quantity'];
+                }else{
+                    $pricesss = $item['product_price'] * $item['quantity'];
+                }
                 // dd($pricesss);
                 // $price = $request->price=$pricesss;
                 // $result = $results['user_id'];
